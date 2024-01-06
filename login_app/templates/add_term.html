@@ -132,7 +132,7 @@
         <div style="color: white; margin-left: 2%; ">
             <h1 style="font-family: 'Times New Roman', Times, serif; font-size: 35px; margin-top: 12px;">University of the Philippines Manila</h1>
         </div>        
-        <div style="color: white; float: right; margin-top: 1%; margin-left: 60%;">
+        <div style="color: white; float: right; margin-top: 1%; margin-left: 52%;">
             <i class="w3-xxlarge material-icons">person</i>
             <p style="font-size: small;">{{request.user.username}}</p>
         </div>
@@ -154,25 +154,25 @@
     <br>
     <br>
 
-    <div class="register-profile">
+    <div class="register-profile" style="justify-content: center; align-items: center; margin-top: 8%; margin-left: 35%;">
         <form method="POST" action="{% url 'create_term' %}">
             {% csrf_token %}
-            <table class="termTable" style="width: 40vw;">
+            <table class="termTable" >
                 <tr style="border: none;">
-                    <td style="padding-bottom: 5px; padding-top: 5px;"><label class="table-label" for="title">Title: </label></td>
-                    <td style="padding-bottom: 5px; padding-top: 5px;">{{ term_form.title}}</td>
+                    <td style="padding-bottom: 5px; padding-top: 5px; width: 100px;"><label class="table-label" for="title">Title: </label></td>
+                    <td style="padding-bottom: 5px; padding-top: 5px; width: 400px;">{{ term_form.title}}</td>
                 </tr>
                 <tr style="border: none;">
-                    <td style="padding-bottom: 5px; padding-top: 5px;"><label class="table-label" for="startDate">Start Date:</label></td>
-                    <td style="padding-bottom: 5px; padding-top: 5px;">{{ term_form.start_date }}</td>
+                    <td style="padding-bottom: 5px; padding-top: 5px; width: 100px;"><label class="table-label" for="startDate">Start Date:</label></td>
+                    <td style="padding-bottom: 5px; padding-top: 5px; width: 400px;">{{ term_form.start_date }}</td>
                 </tr>
                 <tr style="border: none;">
-                    <td style="padding-bottom: 5px; padding-top: 5px;"><label class="table-label" for="endDate">End Date:</label></td>
-                    <td style="padding-bottom: 5px; padding-top: 5px;">{{ term_form.end_date }}</td>
+                    <td style="padding-bottom: 5px; padding-top: 5px; width: 100px;"><label class="table-label" for="endDate">End Date:</label></td>
+                    <td style="padding-bottom: 5px; padding-top: 5px; width: 400px;">{{ term_form.end_date }}</td>
                 </tr>
                 <tr>
-                    <td><input type="submit" value="Submit" style="width: 250px; background-color: rgb(0, 85, 0); color: white; margin-left: 10%; margin-top: 5%;"></td>
-                    <td><input type="button" value="Back" onclick="window.location.href='/academic_terms'" style="width: 250px; background-color: maroon; color: white; margin-left: 40%; margin-top: 5%;"></td>
+                    <td><input type="submit" value="Submit" style="width: 250px; background-color: rgb(0, 85, 0); color: white; margin-left: 15%; margin-top: 5%;"></td>
+                    <td><input type="button" value="Back" onclick="window.location.href='/academic_terms'" style="width: 250px; background-color: maroon; color: white; margin-left: 20%; margin-top: 5%;"></td>
                 </tr>
             </table>
             

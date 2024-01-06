@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=0.9">
 
     <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
     <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
@@ -173,7 +173,7 @@
         <div style="color: white; margin-left: 2%; ">
             <h1 style="font-family: 'Times New Roman', Times, serif; font-size: 35px; margin-top: 12px;">University of the Philippines Manila</h1>
         </div>        
-        <div style="color: white; float: right; margin-top: 1%; margin-left: 60%;">
+        <div style="color: white; float: right; margin-top: 1%; margin-left: 52%;">
             <i class="w3-xxlarge material-icons">person</i>
             <p style="font-size: small;">{{request.user.username}}</p>
         </div>
@@ -219,23 +219,24 @@
         </form>
     
         <br>
-        <br>
 
-        <table>
-            <label style="margin-left: 275px;">Select Record to Edit or Delete</label>
-            <br><br>
+        <label style="margin-left: 275px; margin-top: 20px;">Select Record to Edit or Delete</label>
+
+        <table style="margin-left: 230px;">
             {% for x in userprofiles %}
-            <form id="delete {{ x.id }} form" method="POST" action="{% url 'delete_student' x.id %}">
+            <form id="delete {{ x.id }} form" method="POST" action="{% url 'delete_student' x.id %}" >
                 {% csrf_token %}
                 <tr class="userRow">
                     <td onclick="window.location.href='/update_profile/{{ x.id }}'" style="left: 0;"><i class="w3-xxlarge material-icons" style="color: gray; border: 1px solid gray; border-radius: 100%;">person</i></td>
-                    <td onclick="window.location.href='/update_profile/{{ x.id }}'" style="font-weight: 600;"><em>{{ x.first_name }} {{ x.last_name }}</em></td>
-                    <td onclick="window.location.href='/update_profile/{{ x.id }}'" class="data"><em>{{ x.user.email }}</em></td>
+                    <td onclick="window.location.href='/update_profile/{{ x.id }}'" style="font-weight: 600; width: 150px;"><em>{{ x.first_name }} {{ x.last_name }}</em></td>
+                    <td onclick="window.location.href='/update_profile/{{ x.id }}'" class="data" ><em>{{ x.user.email }}</em></td>
                     <td onclick="window.location.href='/update_profile/{{ x.id }}'" class="data"><em>{{ x.staff_id }}</em></td>
                     <td onclick="window.location.href='/update_profile/{{ x.id }}'" class="data"><em>{{ x.role }} </em></td>
                     <td onclick="window.location.href='/update_profile/{{ x.id }}'" class="data">{{ x.department}}</td>
                     <td class="data">       
-                        <button type="submit" onclick="return confirm('Are you sure you wish to delete the user \n  {{ x.user.email }} : {{ x.first_name }} {{ x.last_name }} ?');" style="background-color: white; border: none;"><span class="material-icons" style="color: maroon;">delete</span></button>
+                        <button type="submit" onclick="return confirm('Are you sure you wish to delete the user \n  {{ x.user.email }} : {{ x.first_name }} {{ x.last_name }} ?');" style="background-color: transparent; border: none; width: 50px; margin-right: 150px;" >
+                            <span class="material-icons" style="color: maroon;">delete</span>
+                        </button>
                     </td>
                 </tr>
             </form>

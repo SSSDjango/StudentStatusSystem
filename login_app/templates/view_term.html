@@ -150,7 +150,7 @@
         <div style="color: white; margin-left: 2%; ">
             <h1 style="font-family: 'Times New Roman', Times, serif; font-size: 35px; margin-top: 12px;">University of the Philippines Manila</h1>
         </div>        
-        <div style="color: white; float: right; margin-top: 1%; margin-left: 60%;">
+        <div style="color: white; float: right; margin-top: 1%; margin-left: 52%;">
             <i class="w3-xxlarge material-icons">person</i>
             <p style="font-size: small;">{{request.user.username}}</p>
         </div>
@@ -233,15 +233,17 @@
     <div>
         <form method="POST" action="{% url 'view_term' term.id %}"> {% csrf_token %}
         <div style="align-items: center;">
-            <label style="margin-left: 15%;">{{ term.title }}</label>
+            <br/>
+            <label style="margin-left: 20%;">{{ term.title }}</label>
+            <br/>
             <button class="grade-subject"  type="button" onclick="window.location.href='/create_subject/{{ term.id }}'"
-            {% if term.current_term == 0 %} style="margin-left: 8%;" {% else %} style="margin-left: 18%;" {% endif %}
+            {% if term.current_term == 0 %} style="margin-left: 20%;" {% else %} style="margin-left: 20%;" {% endif %}
             >Add Course</button>
             {% if term.current_term == 0 %} 
             <button class="grade-subject" type="button" style="margin-left: 2%;" onclick="setCurrent()">Set as Active Term</button>
             {% endif %}
-            <input value='{{ professor_filter }}' type="text" class="search-input"  name='professor' style="margin-left: 2%; margin-top: 50px" placeholder="Search by professor's last name...">
-            <input value='{{ search }}' type="text" class="search-input"  name='name' style="margin-left: 2%; margin-top: 50px" placeholder="Search by name...">
+            <input value='{{ professor_filter }}' type="text" class="search-input"  name='professor' style="margin-left: 2%; margin-top: 50px; width: 320px;" placeholder="Search by professor's last name...">
+            <input value='{{ search }}' type="text" class="search-input"  name='name' style="margin-left: 2%; margin-top: 50px; width: 320px;" placeholder="Search by name...">
             <button type="submit" hidden>
         </div>
         </form>

@@ -132,7 +132,7 @@
         <div style="color: white; margin-left: 2%; ">
             <h1 style="font-family: 'Times New Roman', Times, serif; font-size: 35px; margin-top: 12px;">University of the Philippines Manila</h1>
         </div>        
-        <div style="color: white; float: right; margin-top: 1%; margin-left: 60%;">
+        <div style="color: white; float: right; margin-top: 1%; margin-left: 52%;">
             <i class="w3-xxlarge material-icons">person</i>
             <p style="font-size: small;">{{request.user.username}}</p>
         </div>
@@ -154,37 +154,35 @@
     <br>
     <br>
 
-    <div class="addCourses" style="margin: 0 auto; margin-top: 8%; margin-left: 30%;">
+    <div class="addCourses" style="justify-content: center; align-items: center; margin-top: 8%; margin-left: 35%;">
         <form method="POST" action="{% url 'edit_offering' offering.id %}">
             {% csrf_token %}
             <table style="width: 650px; border-collapse: collapse;">
                 <tr style="border: none;">
-                    <td style="width: 6vw;"><label class="table-label" for="courseName">Course Name:</label></td>
-                    <td style="width: 20vw;">{{ offering_form.subject_name }}</td>
+                    <td colspan="1" style="width: 10vw;"><label class="table-label" for="courseName">Course Name:</label></td>
+                    <td colspan="3" style="width: 15vw;">{{ offering_form.subject_name }}</td>
                 </tr>
                 <tr style="border: none;">
-                    <td style="width: 6vw;"><label class="table-label" for="courseTitle">Subject Title:</label></td>
-                    <td style="width: 20vw;">{{ offering_form.subject_title }}</td>
+                    <td colspan="1" style="width: 10vw;"><label class="table-label" for="courseTitle">Subject Title:</label></td>
+                    <td colspan="3" style="width: 15vw;">{{ offering_form.subject_title }}</td>
                 </tr>
                 <tr style="border: none;">
-                    <td style="width: 6vw;"><label class="table-label" for="department">Department:</label></td>
-                    <td style="width: 20vw;">{{ offering_form.department }}</td>
+                    <td colspan="1" style="width: 10vw;"><label class="table-label" for="department">Department:</label></td>
+                    <td colspan="3" style="width: 15vw;">{{ offering_form.department }}</td>
                 </tr>
                 <tr style="border: none;">
-                    <td style="width: 6vw;"><label class="table-label" for="units">Units:</label></td>
-                    <td style="width: 20vw;">{{ offering_form.units }}</td>
+                    <td colspan="1" style="width: 10vw;"><label class="table-label" for="units">Units:</label></td>
+                    <td colspan="3" style="width: 15vw;">{{ offering_form.units }}</td>
                 </tr>
-                <tr style="border: none;">
+                <tr style="border: none;" >
                     <td style="width: 6vw;"><label class="table-label" for="units">Lecture:</label></td>
                     <td style="width: 20vw;">{{ offering_form.lecture }}</td>
-                </tr>
-                <tr style="border: none;">
                     <td style="width: 6vw;"><label class="table-label" for="units">Lab:</label></td>
                     <td style="width: 20vw;">{{ offering_form.lab }}</td>
                 </tr>
                 <tr style="border: none;">
-                    <td style="width: 6vw;"><input type="submit" value="Save" style="background-color: rgb(0, 85, 0); color: white; width: 200px; margin-left: 25%;"></td>
-                    <td style="width: 20vw;"><button type="button" style="width: 200px; margin-left: 40%;" onclick="window.location.href='/courses_offered'">Back</button></td>
+                    <td colspan="2" style="width: 6vw;"><input type="submit" value="Save" style="background-color: rgb(0, 85, 0); color: white; width: 200px; margin-left: 25%;"></td>
+                    <td colspan="2" style="width: 20vw;"><button type="button" style="width: 200px; margin-left: 15%;" onclick="window.location.href='/courses_offered'">Back</button></td>
                 </tr>
             </table>
             

@@ -242,7 +242,7 @@
         <div style="color: white; margin-left: 2%; ">
             <h1 style="font-family: 'Times New Roman', Times, serif; font-size: 35px; margin-top: 12px;">University of the Philippines Manila</h1>
         </div>        
-        <div style="color: white; float: right; margin-top: 1%; margin-left: 60%;">
+        <div style="color: white; float: right; margin-top: 1%; margin-left: 52%;">
             <i class="w3-xxlarge material-icons">person</i>
             <p style="font-size: small;">{{request.user.username}}</p>
         </div>
@@ -268,7 +268,7 @@
         <form method="POST" action="{% url 'academic_terms' %}"> {% csrf_token %}
         <div>
             <button style="margin-left: 20%;" class="add" type="button" onclick="window.location.href='/create_term'" >Add Term</button>
-            <input type="text" name='term' value="{{ search }}" class="search-input" placeholder="Search...">
+            <input type="text" name='term' value="{{ search }}" class="search-input" placeholder="Search..." style="width: 40%;">
             <button type="submit" hidden>
         </div>
         </form>

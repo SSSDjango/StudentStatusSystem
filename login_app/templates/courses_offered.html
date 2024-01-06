@@ -177,6 +177,10 @@
             padding: 5px; 
             margin: -10; 
         }
+
+        .data{
+            color: gray;
+        }
 </style>
 <body> 
     <div class="navbar">
@@ -184,7 +188,7 @@
         <div style="color: white; margin-left: 2%; ">
             <h1 style="font-family: 'Times New Roman', Times, serif; font-size: 35px; margin-top: 12px;">University of the Philippines Manila</h1>
         </div>        
-        <div style="color: white; float: right; margin-top: 1%; margin-left: 60%;">
+        <div style="color: white; float: right; margin-top: 1%; margin-left: 52%;">
             <i class="w3-xxlarge material-icons">person</i>
             <p style="font-size: small;">{{request.user.username}}</p>
         </div>
@@ -216,13 +220,13 @@
         <table>
             <thead>
                 <tr>
-                    <th style="padding-left: 100px;"><em>Course</em></th>
-                    <th><em>Course Title</em></th>
-                    <th><em>Lecture</em></th>
-                    <th><em>Laboratory</em></th>
-                    <th><em>Units</em></th>
-                    <th><em>Department</em></th>
-                    <th><em></em></th>
+                    <th style="padding-left: 100px; font-size: large;"><em>Course</em></th>
+                    <th style="font-size: large;"><em>Course Title</em></th>
+                    <th style="font-size: large;"><em>Lecture</em></th>
+                    <th style="font-size: large;"><em>Laboratory</em></th>
+                    <th style="font-size: large;"><em>Units</em></th>
+                    <th style="font-size: large; padding-left: 40px;"><em>Department</em></th>
+                    <th style="font-size: large;"><em></em></th>
                 </tr>
             </thead>
             <tbody>
@@ -234,9 +238,9 @@
                     <td onclick="window.location.href='/edit_offering/{{ x.id }}'" class="data"><input type="checkbox" {% if x.lecture == 1 %} checked {% endif %} disabled></td>
                     <td onclick="window.location.href='/edit_offering/{{ x.id }}'" class="data"><input type="checkbox" {% if x.lab == 1 %} checked {% endif %} disabled></td>
                     <td onclick="window.location.href='/edit_offering/{{ x.id }}'" class="data"><em>{{ x.units }} units</em></td>
-                    <td onclick="window.location.href='/edit_offering/{{ x.id }}'" class="data"><em>{{ x.department }}</em></td>
+                    <td onclick="window.location.href='/edit_offering/{{ x.id }}'" class="data" style="padding-left: 60px;"><em>{{ x.department }}</em></td>
                     <td>
-                        <button type="submit" onclick="return confirm('Are you sure you wish to delete the course offering \n {{ x.subject_name }} - {{ x.subject_title }} ?');" class="deleteButton" value="Delete" id="deleteButton_{{ x.id }}" style="background-color: white; border: none;"><span class="material-icons" style="color: maroon;">delete</span></button>
+                        <button type="submit" onclick="return confirm('Are you sure you wish to delete the course offering \n {{ x.subject_name }} - {{ x.subject_title }} ?');" class="deleteButton" value="Delete" id="deleteButton_{{ x.id }}" style="background-color: transparent; border: none;"><span class="material-icons" style="color: maroon;">delete</span></button>
                     </td>
                 </tr>
             </form>
