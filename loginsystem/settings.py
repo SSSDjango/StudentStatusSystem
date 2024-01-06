@@ -59,6 +59,8 @@ MIDDLEWARE = [
 
 ROOT_URLCONF = "loginsystem.urls"
 
+CSRF_TRUSTED_ORIGINS = ['https://studentstatussystem-production.up.railway.app']
+
 TEMPLATES = [
     {
         "BACKEND": "django.template.backends.django.DjangoTemplates",
