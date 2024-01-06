@@ -1,0 +1,216 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
+
+    <title>Enrollment</title>
+</head>
+<style>
+
+        label {
+            font-size: 20px;
+            font-weight: 600;
+            color: maroon;
+        }
+
+        img{
+            width: 65px;
+            height: auto;
+            margin-left: 25px;
+            margin-top: 8px;
+            margin-bottom: 8px;
+        }
+
+        .navbar {
+            background-color: maroon;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            z-index: 1;
+            display: flex;
+        }
+
+        i{
+            color: white;
+            float: right;
+            margin-right: 25px;
+        }
+        
+        .sidenav {
+            height: 100vh;
+            width: 250px; 
+            position: fixed; 
+            left: 0;
+            background-color: white; 
+            padding-top: 10%;
+            border: 1px solid maroon;
+            padding-left: 25px;
+        }
+
+        .sidenav a {
+            padding: 10px 25px;
+            text-decoration: none;
+            font-size: 16px;
+            color: maroon; 
+            display: block;
+        }
+
+        .sidenav a:hover {
+            text-decoration: underline;
+        }
+
+        .sidenav-label{
+            font-size: 20px;
+            font-weight: 600;
+            color: maroon;
+        }
+
+        .table-label{
+            font-size: 16px;
+            color: gray;
+        }
+
+        input, select{
+            border-radius: 25px;
+            border: 1px solid lightgray;
+            padding: 10px;
+            padding-left: 15px;
+            width: 100%;
+        }
+
+        button, .save-input{
+            color: white;
+            background-color: maroon;
+            border: none;
+            padding: 10px;
+            border-radius: 20px;
+            width: 180px;
+        }
+
+        .footer {
+            background-color: maroon; 
+            color: white; 
+            padding: 20px; 
+            text-align: right; 
+            position: fixed; 
+            width: 100%; 
+            bottom: 0; 
+        }
+
+        .subjects{
+            width: 100vw;
+            padding-top: 3%;
+        }
+
+        form{
+            margin-top: 3%;
+        }
+
+        .labels{
+            width: 160px;
+        }
+
+        .inputs{
+            width: 275px;
+        }
+
+        table {
+            margin-left: 250px;
+            border-collapse: collapse; 
+            width: 85vw; 
+        }
+
+        table tr {
+            border-top: 1px solid lightgrey; 
+            border-bottom: 1px solid lightgrey; 
+        }
+
+        table td {
+            padding: 5px;
+            padding-left: 20px; 
+            margin: -10; 
+        } 
+
+        .search-input{
+            padding: 10px;
+            margin-left: 25px;
+            width: 370px;
+            border-radius: 20px;
+            border: 1px solid gray;
+        }
+
+</style>
+<body> 
+    <div class="navbar"> 
+        <a href="/admin_dashboard"><img src="https://upload.wikimedia.org/wikipedia/en/thumb/3/3d/University_of_the_Philippines_Manila_Seal.svg/300px-University_of_the_Philippines_Manila_Seal.svg.png" /></a>
+        <div style="color: white; margin-left: 2%; ">
+            <h1 style="font-family: 'Times New Roman', Times, serif; font-size: 35px; margin-top: 12px;">University of the Philippines Manila</h1>
+        </div>        
+        <div style="color: white; float: right; margin-top: 1%; margin-left: 60%;">
+            <i class="w3-xxlarge material-icons">person</i>
+            <p style="font-size: small;">{{request.user.username}}</p>
+        </div>
+    </div>    
+    <br>
+    <br>    
+    <div class="sidenav">
+        <label class="sidenav-label">Staff</label>
+        <a href="/staff_dashboard">Profile</a>
+        <br />
+        <label class="sidenav-label">Students</label>
+        <a a href="{% url 'registration' %}">Registration</a>
+        <a href="/enrollment">Enrollment</a>
+        <a a href="/staff_grades">Grades</a>
+        <a href="/advisor_assignments">Adviser Assignments</a>
+        <a href="/graduation">Graduation</a>
+        <form action="{% url 'perform_logout' %}" method="post">
+            {% csrf_token %}
+            <button class="logout" type="submit" style="position: absolute; bottom: 250px;">Log Out</button>
+        </form>        
+    </div>
+    <br>
+    <br>
+
+    <form method="POST" action="{% url 'enrollment' %}"> {% csrf_token %}
+    <div style="align-items: center; margin-top: 2%; margin-left: 15%;">
+        <button type="submit" hidden></button>
+        <label>{{ term.title }}</label>
+        <input style="margin-left: 30%;" value='{{ class_code_filter }}' name='class_code' type="text" class="search-input" placeholder="Search by class code...">
+        <input value='{{ search }}' name='name' type="text" class="search-input" placeholder="Search by name...">
+    </div>
+    </form>
+
+    <div class="subjects">
+        <table>
+            {% for x in subjects %}
+              <tr>
+              <td style="font-weight: 600;">{{ x.subject_offered.subject_name }}</td>
+              <td>{{ x.subject_offered.subject_title }}</td>
+              <td>{{ x.class_code }}</td>
+              <td>{{ x.enrolled }} enrolled</td>
+              <td>{{ x.professor.first_name }} {{ x.professor.last_name }}</td>
+              <td>
+                <form method="POST" action="{% url 'add_course_students' x.id %}">
+                    {% csrf_token %}
+                    <input type="submit" value="Add Students">
+                </form>
+              </td>
+              </tr>
+            {% endfor %}
+            </table>
+    </div>
+    
+
+    <div class="footer">
+        2023
+    </div>
+</body>
+<script>
+    
+</script>
+</html>
