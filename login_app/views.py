@@ -304,6 +304,11 @@ def create_student(request):
 def delete_student(request, student_id):
     if request.method == "POST":
         student_to_delete = get_object_or_404(Student, pk=student_id)
+        deleted_student = Student.objects.get(id=0)
+        registrations = Registration.objects.filter(student=student_to_delete)
+        for registration in registrations:
+            registration.student = deleted_student
+            registration.save(update_fields=['student'])
         student_to_delete.delete()
 
     return redirect(request.META['HTTP_REFERER'])
@@ -1224,18 +1229,18 @@ def advisor_assignments(request):
 
     if 'program' not in request.POST:
         context['program_filter'] = 'None'
-        context['students'] = Student.objects.filter(graduate='ONGOING', last_name__contains=last_name_filter, student_number__contains=student_number_filter)
+        context['students'] = Student.objects.filter(graduate='ONGOING', last_name__contains=last_name_filter, student_number__contains=student_number_filter).exclude(id=0)
     else:
         program_filter = request.POST.get('program')
         context['program_filter'] = program_filter
         if program_filter == 'None':
-            context['students'] = Student.objects.filter(graduate='ONGOING', last_name__contains=last_name_filter, student_number__contains=student_number_filter)
+            context['students'] = Student.objects.filter(graduate='ONGOING', last_name__contains=last_name_filter, student_number__contains=student_number_filter).exclude(id=0)
         elif program_filter == 'BSCS':
-            context['students'] = Student.objects.filter(graduate='ONGOING', program='BS COMPUTER SCIENCE', last_name__contains=last_name_filter, student_number__contains=student_number_filter)
+            context['students'] = Student.objects.filter(graduate='ONGOING', program='BS COMPUTER SCIENCE', last_name__contains=last_name_filter, student_number__contains=student_number_filter).exclude(id=0)
         elif program_filter == 'BSBC':
-            context['students'] = Student.objects.filter(graduate='ONGOING', program='BS BIOCHEMISTRY', last_name__contains=last_name_filter, student_number__contains=student_number_filter)
+            context['students'] = Student.objects.filter(graduate='ONGOING', program='BS BIOCHEMISTRY', last_name__contains=last_name_filter, student_number__contains=student_number_filter).exclude(id=0)
         elif program_filter == 'BSAP':
-            context['students'] = Student.objects.filter(graduate='ONGOING', program='BS APPLIED PHYSICS', last_name__contains=last_name_filter, student_number__contains=student_number_filter)
+            context['students'] = Student.objects.filter(graduate='ONGOING', program='BS APPLIED PHYSICS', last_name__contains=last_name_filter, student_number__contains=student_number_filter).exclude(id=0)
     
     context['last_name_filter'] = last_name_filter
     context['student_number_filter'] = student_number_filter

@@ -97,7 +97,7 @@ class Student(models.Model):
 
     first_enrollment = models.ForeignKey(Term, on_delete=models.SET_NULL, blank=True, null=True,  related_name='first_term') # maybe replace the on_delete
     last_enrollment = models.ForeignKey(Term, on_delete=models.SET_NULL, blank=True, null=True, related_name='recent_term') # if enrolled
-    advisor = models.ForeignKey(UserProfile, on_delete=models.CASCADE)
+    advisor = models.ForeignKey(UserProfile, on_delete=models.SET_NULL, blank=True, null=True)
 
 # List of all subjects offered for keeping track of what subjects can be added for the term
 class OfferedSubject(models.Model):
@@ -112,10 +112,10 @@ class OfferedSubject(models.Model):
 
 # List of available for enrollment - per term 
 class Subject(models.Model):
-    term = models.ForeignKey(Term, on_delete=models.CASCADE)
-    subject_offered = models.ForeignKey(OfferedSubject, on_delete=models.CASCADE)
+    term = models.ForeignKey(Term, on_delete=models.PROTECT)
+    subject_offered = models.ForeignKey(OfferedSubject, on_delete=models.PROTECT)
     
-    professor = models.ForeignKey(UserProfile, on_delete=models.CASCADE)
+    professor = models.ForeignKey(UserProfile, on_delete=models.PROTECT, blank=True, null=True)
     section = models.CharField(max_length=200)
 
     slots = models.IntegerField(default=25)
@@ -125,8 +125,8 @@ class Subject(models.Model):
 
 # Enrollment of a student to a subject
 class Registration(models.Model):
-    student = models.ForeignKey(Student, on_delete=models.CASCADE)
-    subject = models.ForeignKey(Subject, on_delete=models.CASCADE) 
+    student = models.ForeignKey(Student, on_delete=models.SET_NULL, blank=True, null=True)
+    subject = models.ForeignKey(Subject, on_delete=models.PROTECT) 
 
     # determined based on grade
     completion = models.CharField(max_length=200, choices=Completion.choices, blank=True)
