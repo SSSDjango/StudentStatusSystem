@@ -258,7 +258,7 @@
         <a href="{% url 'courses_offered' %}">Courses Offered</a>
         <form action="{% url 'perform_logout' %}" method="post">
             {% csrf_token %}
-            <button class="logout" type="submit">Log Out</button>
+            <button class="logout" type="submit" style="margin: 0;">Log Out</button>
         </form>        
     </div>
     <br>

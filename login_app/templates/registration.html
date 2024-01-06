@@ -202,7 +202,7 @@ p<!DOCTYPE html>
         <div style="color: white; margin-left: 2%; ">
             <h1 style="font-family: 'Times New Roman', Times, serif; font-size: 35px; margin-top: 12px;">University of the Philippines Manila</h1>
         </div>        
-        <div style="color: white; float: right; margin-top: 1%; margin-left: 60%;">
+        <div style="color: white; float: right; margin-top: 1%; margin-left: 52%;">
             <i class="w3-xxlarge material-icons">person</i>
             <p style="font-size: small;">{{request.user.username}}</p>
         </div>
@@ -214,7 +214,7 @@ p<!DOCTYPE html>
         <a href="/staff_dashboard">Profile</a>
         <br />
         <label class="sidenav-label">Students</label>
-        <a a href="{% url 'registration' %}">Registration</a>
+        <a a href="{% url 'registration' %}"><u>Registration</u></a>
         <a href="/enrollment">Enrollment</a>
         <a a href="/staff_grades">Grades</a>
         <a href="/advisor_assignments">Adviser Assignments</a>
@@ -235,14 +235,14 @@ p<!DOCTYPE html>
                 - DELETE->CONFIRM button change -->
             <button type="button" class="manage-student" onclick="window.location.href='/manage_students'">Manage Student Record</button>
             <!-- view of all students _ filter because this will include all students _ dropdown to change enrollment (Registration status) -->
-            <button type="button" class="register-old" onclick="window.location.href='/manage_registration'">Manage Students Registration</button>
+            <button type="button" class="register-old" onclick="window.location.href='/manage_registration'" style="width: 270px;">Manage Students Registration</button>
             <input value="{{ search }}" type="text" name="name" class="search-input" placeholder="Search by last name...">
             <input type="submit" hidden></input>
         </div>
         </form>
     
         <br>
-        <table>
+        <table style="margin-left: 15%;">
             <label style="margin-left: 275px;">Registered Students</label>
             <br><br>
             {% for x in students %}
@@ -250,8 +250,8 @@ p<!DOCTYPE html>
                     <td style="left: 0;"><i class="w3-xxlarge material-icons" style="color: gray; border: 1px solid gray; border-radius: 100%;">person</i></td>
                     <td style="font-weight: 600;">{{ x.first_name }} {{ x.last_name }}</td>
                     <td class="data"><em>{{ x.student_number }}</em></td>
-                    <td class="data"><em>{{ x.email }}</em></td>
-                    <td class="data"><em>{{ x.program }} </em></td>
+                    <td class="data" style="padding-right: -100px; margin-right: 0;"><em>{{ x.email }}</em></td>
+                    <td class="data" style="padding-left: 0; padding-right: 30px;"><em>{{ x.program }} </em></td>
                     <td class="data"><em>{{ x.first_enrollment.title }} </em></td>
                     <td></td>
                 </tr>

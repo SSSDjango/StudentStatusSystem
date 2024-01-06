@@ -156,7 +156,7 @@
         <div style="color: white; margin-left: 2%; ">
             <h1 style="font-family: 'Times New Roman', Times, serif; font-size: 35px; margin-top: 12px;">University of the Philippines Manila</h1>
         </div>        
-        <div style="color: white; float: right; margin-top: 1%; margin-left: 60%;">
+        <div style="color: white; float: right; margin-top: 1%; margin-left: 52%;">
             <i class="w3-xxlarge material-icons">person</i>
             <p style="font-size: small;">{{request.user.username}}</p>
         </div>
@@ -168,7 +168,7 @@
         <a href="/staff_dashboard">Profile</a>
         <br />
         <label class="sidenav-label">Students</label>
-        <a a href="{% url 'registration' %}">Registration</a>
+        <a a href="{% url 'registration' %}"><u>Registration</u></a>
         <a href="/enrollment">Enrollment</a>
         <a a href="/courses">Grades</a>
         <a href="/advisor_assignments">Adviser Assignments</a>
@@ -180,8 +180,8 @@
     </div>
 
     <form id="filter" method="POST" action="{% url 'manage_registration' %}"> {% csrf_token %}
-        <div>
-            <select id="program" name='program' class="enroll-dropdown" style="margin-left: 15%;">
+        <div style="width: 80vw; margin-left: 18%;">
+            <select id="program" name='program' class="enroll-dropdown" >
                 {% if program_filter == 'None' %}
                     <option selected>None</option>
                 {% else %}
@@ -195,15 +195,15 @@
                     {% endif %}
                 {% endfor %}
             </select>
-            <input style="margin-top: 50px; margin-left:1.5%;" value="{{ term_filter }}" type="text" name="term" class="search-input" placeholder="Search by first enrollment term title...">
-            <input style="margin-top: 50px; margin-left:1.5%;" value="{{ student_number_filter }}" type="text" name="student_number" class="search-input" placeholder="Search by student number...">
-            <input style="margin-top: 50px; margin-left:1.5%;" value="{{ last_name_filter }}" type="text" name="last_name" class="search-input" placeholder="Search by last name...">
-            <button style="width: 100px; margin-left:1.5%;" type="button" onclick="window.location.href='/registration'">Back</a></button>
+            <input style="margin-top: 50px; margin-left:1%; width: 310px;" value="{{ term_filter }}" type="text" name="term" class="search-input" placeholder="Search by first enrollment term title...">
+            <input style="margin-top: 50px; margin-left:1%; width: 290px;" value="{{ student_number_filter }}" type="text" name="student_number" class="search-input" placeholder="Search by student number...">
+            <input style="margin-top: 50px; margin-left:1%; width: 290px;" value="{{ last_name_filter }}" type="text" name="last_name" class="search-input" placeholder="Search by last name...">
+            <button style="width: 100px; margin-left:1%;" type="button" onclick="window.location.href='/registration'">Back</a></button>
             <input type="submit" hidden></input>
         </div>
     </form>
 
-    <div class="subjects">
+    <div class="subjects" style="width: 70vw;">
         <table>
             <label style="margin-left: 275px;">Register Students</label>
             <br><br>
@@ -213,9 +213,9 @@
             <input name="student_id" value="{{ x.id }}" hidden></input>
             <tr>
             <td style="font-weight: 600; margin-left: 100px;">{{ x.first_name }} {{ x.last_name }}</td>
-            <td><em>{{ x.student_number }}</em></td>
-            <td><em>{{ x.program }}</em></td>
-                <td><em><input class="enrolled-checkbox" id="{{ x.id }}" type="checkbox"
+            <td style="padding-right: 0;"><em>{{ x.student_number }}</em></td>
+            <td style="padding-right: 0;"><em>{{ x.program }}</em></td>
+                <td style="padding-right: 100px;"><em><input class="enrolled-checkbox" id="{{ x.id }}" type="checkbox"
                     {% if x.enrollment == 'ENROLLED' %} 
                         checked
                     {% endif %}

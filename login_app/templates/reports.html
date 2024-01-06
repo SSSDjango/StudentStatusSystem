@@ -197,7 +197,7 @@
         <div style="color: white; margin-left: 2%; ">
             <h1 style="font-family: 'Times New Roman', Times, serif; font-size: 35px; margin-top: 12px;">University of the Philippines Manila</h1>
         </div>        
-        <div style="color: white; float: right; margin-top: 1%; margin-left: 60%;">
+        <div style="color: white; float: right; margin-top: 1%; margin-left: 52%;">
             <i class="w3-xxlarge material-icons">person</i>
             <p style="font-size: small;">{{request.user.username}}</p>
         </div>
@@ -220,29 +220,29 @@
     {% elif user_role == 'THESIS ADVISOR' %} 
     <div class="sidenav">
         <label>Professor</label>
-        <a href="/thesis_advisor_dashboard"><u>Profile</u></a>
+        <a href="/thesis_advisor_dashboard">Profile</a>
         <br />
         <label>Grades</label>
         <a href="/courses">By Course</a>
         <label for="SPLink" onclick="window.location.href='/advisor_view'" style="cursor: pointer;">Special Project</label>
-        <label for="Reports" onclick="window.location.href='/reports'" style="cursor: pointer;">Reports</label>
+        <label for="Reports" onclick="window.location.href='/reports'" style="cursor: pointer;"><u>Reports</u></label>
         <form action="{% url 'perform_logout' %}" method="post">
             {% csrf_token %}
-            <button class="logout" type="submit">Log Out</button>
+            <button class="logout" type="submit" style="margin: 0;">Log Out</button>
         </form>        
     </div>
     {% elif user_role == 'PROGRAM ADVISOR' %} 
     <div class="sidenav">
         <label class="sidenav-label">Professor</label>
-        <a href="/program_advisor_dashboard"><u>Profile</u></a>
+        <a href="/program_advisor_dashboard">Profile</a>
         <br />
         <label class="sidenav-label">Grades</label>
         <a href="/courses">By Course</a>
         <label class="sidenav-label" onclick="window.location.href='/advisor_view'" style="cursor: pointer;">Advisory Program</label>
-        <label class="sidenav-label" onclick="window.location.href='/reports'" style="cursor: pointer;">Reports</label>
+        <label class="sidenav-label" onclick="window.location.href='/reports'" style="cursor: pointer;"><u>Reports</u></label>
         <form action="{% url 'perform_logout' %}" method="post">
             {% csrf_token %}
-            <button class="logout" type="submit" style="position: absolute; bottom: 250px;">Log Out</button>
+            <button class="logout" type="submit" style="position: absolute; bottom: 250px; margin: 0;">Log Out</button>
         </form>
     </div>
     {% elif user_role == 'STAFF' %}
@@ -269,8 +269,8 @@
     <div class="compiledTerms" style="width: fit-content;">
         <form action="{% url 'reports' %}" method="POST"> {% csrf_token %}
         <div>
-            <a><button class="back" type="submit">Search</button></a>
-            <input value='{{ search }}' type="text" name='title' class="search-input" placeholder="Search...">
+            <!-- <a><button class="back" type="submit">Search</button></a> -->
+            <input style="margin-left: 60%; margin-top: 2%;" value='{{ search }}' type="text" name='title' class="search-input" placeholder="Search...">
         </div>
         </form>
         <br/>

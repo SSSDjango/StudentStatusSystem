@@ -159,7 +159,7 @@
         <div style="color: white; margin-left: 2%; ">
             <h1 style="font-family: 'Times New Roman', Times, serif; font-size: 35px; margin-top: 12px;">University of the Philippines Manila</h1>
         </div>        
-        <div style="color: white; float: right; margin-top: 1%; margin-left: 60%;">
+        <div style="color: white; float: right; margin-top: 1%; margin-left: 52%;">
             <i class="w3-xxlarge material-icons">person</i>
             <p style="font-size: small;">{{request.user.username}}</p>
         </div>
@@ -175,7 +175,7 @@
         <a href="/enrollment">Enrollment</a>
         <a a href="/courses">Grades</a>
         <a href="/advisor_assignments">Adviser Assignments</a>
-        <a href="/graduation">Graduation</a>
+        <a href="/graduation"><u>Graduation</u></a>
         <form action="{% url 'perform_logout' %}" method="post">
             {% csrf_token %}
             <button class="logout" type="submit" style="position: absolute; bottom: 250px;">Log Out</button>
@@ -183,8 +183,8 @@
     </div>
 
     <form id="filter" method="POST" action="{% url 'manage_graduation' term.id %}"> {% csrf_token %}
-        <div>
-            <select id="program" name='program' id='program' class="enroll-dropdown" style="margin-left: 27.5%;">
+        <div style="width: 85vw; margin-left: 20%;">
+            <select id="program" name='program' id='program' class="enroll-dropdown" >
                 {% if program_filter == 'None' %}
                     <option selected>None</option>
                 {% else %}
@@ -198,8 +198,8 @@
                     {% endif %}
                 {% endfor %}
             </select>
-            <input style="margin-top: 50px; margin-left:1.5%;" value="{{ student_number_filter }}" type="text" name="student_number" id="student_number" class="search-input" placeholder="Search by student number...">
-            <input style="margin-top: 50px; margin-left:1.5%;" value="{{ last_name_filter }}" type="text" name="last_name" id="last_name" class="search-input" placeholder="Search by last name...">
+            <input style="margin-top: 50px; margin-left:1.5%; width: 300px;" value="{{ student_number_filter }}" type="text" name="student_number" id="student_number" class="search-input" placeholder="Search by student number...">
+            <input style="margin-top: 50px; margin-left:1.5%; width: 300px;" value="{{ last_name_filter }}" type="text" name="last_name" id="last_name" class="search-input" placeholder="Search by last name...">
             <button style="margin-left:1.5%;" type="button" onclick=gradAll() >Graduate Qualified</a></button>
             <button style="width: 100px; margin-left:1.5%;" type="button" onclick="window.location.href='/graduation'">Back</a></button>
             <input type="submit" hidden></input>
@@ -235,7 +235,7 @@
             <td><em>{{ x.program }}</em></td>
             <td><em>{{ x.required_units }}</em></td>
             <td><em>{{ x.completed_units }}</em></td>
-                <td><em><input class="graduate-checkbox" id="{{ x.id }}" type="checkbox"
+                <td style="padding-right: 100px;"><em><input class="graduate-checkbox" id="{{ x.id }}" type="checkbox"
                     {% if x.graduate == 'GRADUATED' %} 
                         checked
                     {% endif %}

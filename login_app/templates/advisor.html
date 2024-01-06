@@ -161,7 +161,7 @@
         <div style="color: white; margin-left: 2%; ">
             <h1 style="font-family: 'Times New Roman', Times, serif; font-size: 35px; margin-top: 12px;">University of the Philippines Manila</h1>
         </div>        
-        <div style="color: white; float: right; margin-top: 1%; margin-left: 60%;">
+        <div style="color: white; float: right; margin-top: 1%; margin-left: 52%;">
             <i class="w3-xxlarge material-icons">person</i>
             <p style="font-size: small;">{{request.user.username}}</p>
         </div>
@@ -184,11 +184,11 @@
     {% elif user_role == 'THESIS ADVISOR' %} 
     <div class="sidenav">
         <label class="sidenav-label">Professor</label>
-        <a href="/thesis_advisor_dashboard"><u>Profile</u></a>
+        <a href="/thesis_advisor_dashboard">Profile</a>
         <br />
         <label class="sidenav-label">Grades</label>
         <a href="/courses">By Course</a>
-        <label class="sidenav-label" onclick="window.location.href='/advisor_view'" style="cursor: pointer;">Special Project</label>
+        <label class="sidenav-label" onclick="window.location.href='/advisor_view'" style="cursor: pointer;"><u>Special Project</u></label>
         <label class="sidenav-label" onclick="window.location.href='/reports'" style="cursor: pointer;">Reports</label>
         <form action="{% url 'perform_logout' %}" method="post">
             {% csrf_token %}
@@ -198,11 +198,11 @@
     {% elif user_role == 'PROGRAM ADVISOR' %}
     <div class="sidenav">
         <label class="sidenav-label">Professor</label>
-        <a href="/program_advisor_dashboard"><u>Profile</u></a>
+        <a href="/program_advisor_dashboard">Profile</a>
         <br />
         <label class="sidenav-label">Grades</label>
         <a href="/courses">By Course</a>
-        <label class="sidenav-label" onclick="window.location.href='/advisor_view'" style="cursor: pointer;">Advisory Program</label>
+        <label class="sidenav-label" onclick="window.location.href='/advisor_view'" style="cursor: pointer;"><u>Advisory Program</u></label>
         <label class="sidenav-label" onclick="window.location.href='/reports'" style="cursor: pointer;">Reports</label>
         <form action="{% url 'perform_logout' %}" method="post">
             {% csrf_token %}
@@ -232,15 +232,15 @@
 
     <div>
         <form method="POST" action="{% url 'advisor_view' %}">{% csrf_token %}
-        <div style="align-items: center;">
-            <label style="margin-left: 380px;">
+        <div style="align-items: center; width: 80vw; margin-left: 20%;">
+            <label style="margin-right: 10%;">
                 {% if user_role == 'THESIS ADVISOR'%} Special Project Students
                 {% elif user_role == 'PROGRAM ADVISOR'%} Program Students
                 {% else %} Unauthorized access
                 {% endif %}
             </label>
-            <button class="grade-subject" type="submit">Search</button>
-            <input value='{{ search }}' type="text" class="search-input" name='last_name' placeholder="Search by last name...">
+            <input style="margin-left: 15%; width: 300px;"  value='{{ search }}' type="text" class="search-input" name='last_name' placeholder="Search by last name...">
+            <button style="margin-left: 1%; width: 150px;" class="grade-subject" type="submit">Search</button>
         </div>
         </form>
     

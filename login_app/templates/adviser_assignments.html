@@ -150,7 +150,7 @@
         <div style="color: white; margin-left: 2%; ">
             <h1 style="font-family: 'Times New Roman', Times, serif; font-size: 35px; margin-top: 12px;">University of the Philippines Manila</h1>
         </div>        
-        <div style="color: white; float: right; margin-top: 1%; margin-left: 60%;">
+        <div style="color: white; float: right; margin-top: 1%; margin-left: 52%;">
             <i class="w3-xxlarge material-icons">person</i>
             <p style="font-size: small;">{{request.user.username}}</p>
         </div>
@@ -165,7 +165,7 @@
         <a a href="{% url 'registration' %}">Registration</a>
         <a href="/enrollment">Enrollment</a>
         <a a href="/courses">Grades</a>
-        <a href="/advisor_assignments">Adviser Assignments</a>
+        <a href="/advisor_assignments"><u>Adviser Assignments</u></a>
         <a href="/graduation">Graduation</a>
         <form action="{% url 'perform_logout' %}" method="post">
             {% csrf_token %}
@@ -176,8 +176,8 @@
     <br>
 
     <form id="filter" method="POST" action="{% url 'advisor_assignments' %}"> {% csrf_token %}
-    <div style="display: flex; align-items: center; margin-top: 2%; margin-left: 50%;">
-        <select id="program" name='program' class="enroll-dropdown" style="margin-right: 10px;">
+    <div style="display: flex; align-items: center; margin-top: 2%; margin-left: 47%;">
+        <select id="program" name='program' class="enroll-dropdown" style="margin-right: 8px;">
             {% if program_filter == 'None' %}
                 <option selected>None</option>
             {% else %}
@@ -192,8 +192,8 @@
             {% endfor %}
         </select>
         <button type="submit" hidden></button>
-        <input value='{{ student_number_filter }}' id="student_number" name='student_number' type="text" class="search-input" placeholder="Search by student_number...">
-        <input value='{{ last_name_filter }}' id="last_name" name='last_name' type="text" class="search-input" placeholder="Search by last name...">
+        <input style="width: 300px;" value='{{ student_number_filter }}' id="student_number" name='student_number' type="text" class="search-input" placeholder="Search by student_number...">
+        <input style="width: 300px;" value='{{ last_name_filter }}' id="last_name" name='last_name' type="text" class="search-input" placeholder="Search by last name...">
     </div>
     </form>
 
@@ -206,7 +206,7 @@
                     <td style="font-weight: 600;">{{ x.first_name }} {{ x.last_name }}</td>
                     <td class="data"><em>{{ x.student_number }}</em></td>
                     <td class="data"><em>{{ x.program }}</em></td>
-                    <td class="data">
+                    <td class="data" style="padding-right: 100px;">
                         <select name="advisor" id="{{ x.id }}" class="professor-dropdown">
                             {% for advisor in advisors %}
                                 {% if x.advisor.id == advisor.id %}

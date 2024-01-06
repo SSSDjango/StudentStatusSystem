@@ -150,7 +150,7 @@
         <div style="color: white; margin-left: 2%; ">
             <h1 style="font-family: 'Times New Roman', Times, serif; font-size: 35px; margin-top: 12px;">University of the Philippines Manila</h1>
         </div>        
-        <div style="color: white; float: right; margin-top: 1%; margin-left: 60%;">
+        <div style="color: white; float: right; margin-top: 1%; margin-left: 52%;">
             <i class="w3-xxlarge material-icons">person</i>
             <p style="font-size: small;">{{request.user.username}}</p>
         </div>
@@ -163,7 +163,7 @@
         <br />
         <label class="sidenav-label">Students</label>
         <a a href="{% url 'registration' %}">Registration</a>
-        <a href="/enrollment">Enrollment</a>
+        <a href="/enrollment"><u>Enrollment</u></a>
         <a a href="/courses">Grades</a>
         <a href="/advisor_assignments">Adviser Assignments</a>
         <a href="/graduation">Graduation</a>
@@ -176,7 +176,7 @@
     <br>
 
     <form id="filter" method="POST" action="{% url 'add_course_students' course_id %}"> {% csrf_token %}
-        <div style="display: flex; align-items: center; margin-top: 2%; margin-left: 40%;">
+        <div style="display: flex; align-items: center; margin-top: 2%; margin-left: 20%;">
             <select id="program" name='program' class="enroll-dropdown" style="margin-right: 10px;">
                 {% if program_filter == 'None' %}
                     <option selected>None</option>
@@ -210,7 +210,7 @@
             <td style="font-weight: 600; margin-left: 100px;">{{ x.first_name }} {{ x.last_name }}</td>
             <td><em>{{ x.student_number }}</em></td>
             <td><em>{{ x.program }}</em></td>
-                <td><em><input class="enrolled-checkbox" id="{{ x.id }}" type="checkbox"
+                <td style="padding-right: 100px ;"><em><input class="enrolled-checkbox" id="{{ x.id }}" type="checkbox"
                 {% for y in registrations %}
                     {% if y.student.id == x.id %} 
                         checked

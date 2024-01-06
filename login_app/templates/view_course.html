@@ -146,7 +146,7 @@
         <div style="color: white; margin-left: 2%; ">
             <h1 style="font-family: 'Times New Roman', Times, serif; font-size: 35px; margin-top: 12px;">University of the Philippines Manila</h1>
         </div>        
-        <div style="color: white; float: right; margin-top: 1%; margin-left: 60%;">
+        <div style="color: white; float: right; margin-top: 1%; margin-left: 52%;">
             <i class="w3-xxlarge material-icons">person</i>
             <p style="font-size: small;">{{request.user.username}}</p>
         </div>
@@ -169,10 +169,10 @@
     {% elif user_role == 'THESIS ADVISOR' %} 
     <div class="sidenav">
         <label>Professor</label>
-        <a href="/thesis_advisor_dashboard"><u>Profile</u></a>
+        <a href="/thesis_advisor_dashboard">Profile</a>
         <br />
         <label>Grades</label>
-        <a href="/courses">By Course</a>
+        <a href="/courses"><u>By Course</u></a>
         <label for="SPLink" onclick="window.location.href='/advisor_view'" style="cursor: pointer;">Special Project</label>
         <label for="Reports" onclick="window.location.href='/reports'" style="cursor: pointer;">Reports</label>
         <form action="{% url 'perform_logout' %}" method="post">
@@ -183,10 +183,10 @@
     {% elif user_role == 'PROGRAM ADVISOR' %}
     <div class="sidenav">
         <label class="sidenav-label">Professor</label>
-        <a href="/program_advisor_dashboard"><u>Profile</u></a>
+        <a href="/program_advisor_dashboard">Profile</a>
         <br />
         <label class="sidenav-label">Grades</label>
-        <a href="/courses">By Course</a>
+        <a href="/courses"><u>By Course</u></a>
         <label class="sidenav-label" onclick="window.location.href='/advisor_view'" style="cursor: pointer;">Advisory Program</label>
         <label class="sidenav-label" onclick="window.location.href='/reports'" style="cursor: pointer;">Reports</label>
         <form action="{% url 'perform_logout' %}" method="post">
@@ -202,7 +202,7 @@
         <label class="sidenav-label">Students</label>
         <a a href="{% url 'registration' %}">Registration</a>
         <a href="/enrollment">Enrollment</a>
-        <a a href="/courses">Grades</a>
+        <a a href="/courses"><u>Grades</u></a>
         <a href="/advisor_assignments">Adviser Assignments</a>
         <a href="/graduation">Graduation</a>
         <form action="{% url 'perform_logout' %}" method="post">
@@ -230,8 +230,8 @@
         <form id='upload_csv' action="{% url 'upload_csv' %}" enctype="multipart/form-data" method="POST"> 
             {% csrf_token %}
         <div style="align-items: center;">
-            <label style="margin-left: 15%;">{{ subject.subject_offered.subject_name }} - {{ subject.subject_offered.subject_title }} </label>
-            <label class="grade-subject" style="margin-left: 25%; font-size: 16px; font-weight: normal;">Upload CSV<input type="file" name='csv_file 'id="file_input" required="True" hidden></label> 
+            <label style="margin-left: 18%;">{{ subject.subject_offered.subject_name }} - {{ subject.subject_offered.subject_title }} </label>
+            <label class="grade-subject" style="margin-left: 15%; font-size: 16px; font-weight: normal;">Upload CSV<input type="file" name='csv_file 'id="file_input" required="True" hidden></label> 
             <button class="grade-subject" onClick="downloadCSV()" type="submit" style="margin-left: 2%;">Download CSV</button>
             <button class="grade-subject" {% if user_role == 'ADMIN'%} onclick="window.location.href='/academic_terms/{{ subject.term.id }}'" {% else %} onclick="window.location.href='/courses'" {% endif %} type="button" style="margin-left: 2%;">Back</button>
                 
@@ -242,10 +242,9 @@
             {% csrf_token %}
             <input name='subject' value="{{ subject.id }}" hidden>
         </form>
-    
-        <br>
-        <br>
-        <table>
+        <br/>
+        <br/>
+        <table >
             {% for x in registrations %}
             <form id="{{ x.student.id }} form" method="POST" action="{% url 'update_grade' x.id %}">
             {% csrf_token %}
