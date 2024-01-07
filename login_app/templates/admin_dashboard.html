@@ -93,6 +93,7 @@
         table tr {
             border-top: 1px solid lightgrey; 
             border-bottom: 1px solid lightgrey; 
+            cursor: pointer;
         }
 
         table td {
@@ -163,8 +164,18 @@
             border: none;
             border-radius: 20px;
             width: 180px;
+            cursor: pointer;
         }
 
+        button:hover{
+            background-color: #510400;
+            cursor: pointer;
+        }
+
+        span:hover{
+            border: 1px solid maroon;
+            border-radius: 50%;
+        }
     </style>
 </head>
 <body>
@@ -222,26 +233,31 @@
 
         <label style="margin-left: 275px; margin-top: 20px;">Select Record to Edit or Delete</label>
 
-        <table style="margin-left: 230px;">
-            {% for x in userprofiles %}
-            <form id="delete {{ x.id }} form" method="POST" action="{% url 'delete_student' x.id %}" >
-                {% csrf_token %}
-                <tr class="userRow">
-                    <td onclick="window.location.href='/update_profile/{{ x.id }}'" style="left: 0;"><i class="w3-xxlarge material-icons" style="color: gray; border: 1px solid gray; border-radius: 100%;">person</i></td>
-                    <td onclick="window.location.href='/update_profile/{{ x.id }}'" style="font-weight: 600; width: 150px;"><em>{{ x.first_name }} {{ x.last_name }}</em></td>
-                    <td onclick="window.location.href='/update_profile/{{ x.id }}'" class="data" ><em>{{ x.user.email }}</em></td>
-                    <td onclick="window.location.href='/update_profile/{{ x.id }}'" class="data"><em>{{ x.staff_id }}</em></td>
-                    <td onclick="window.location.href='/update_profile/{{ x.id }}'" class="data"><em>{{ x.role }} </em></td>
-                    <td onclick="window.location.href='/update_profile/{{ x.id }}'" class="data">{{ x.department}}</td>
-                    <td class="data">       
-                        <button type="submit" onclick="return confirm('Are you sure you wish to delete the user \n  {{ x.user.email }} : {{ x.first_name }} {{ x.last_name }} ?');" style="background-color: transparent; border: none; width: 50px; margin-right: 150px;" >
-                            <span class="material-icons" style="color: maroon;">delete</span>
-                        </button>
-                    </td>
-                </tr>
-            </form>
-            {% endfor %}
-        </table>        
+        <div style="margin-left: 100px; max-height: 70vh; overflow-y: auto;">
+            <table>
+                <tbody>
+                    {% for x in userprofiles %}
+                    <form id="delete_{{ x.id }}_form" method="POST" action="{% url 'delete_student' x.id %}">
+                        {% csrf_token %}
+                        <tr class="userRow" >
+                            <td style="left: 0;" onclick="window.location.href='/update_profile/{{ x.id }}'"><i class="w3-xxlarge material-icons" style="color: gray; border: 1px solid gray; border-radius: 100%;">person</i></td>
+                            <td style="font-weight: 600; width: 150px;" onclick="window.location.href='/update_profile/{{ x.id }}'"><em>{{ x.first_name }} {{ x.last_name }}</em></td>
+                            <td class="data" onclick="window.location.href='/update_profile/{{ x.id }}'"><em>{{ x.user.email }}</em></td>
+                            <td class="data" onclick="window.location.href='/update_profile/{{ x.id }}'"><em>{{ x.staff_id }}</em></td>
+                            <td class="data" onclick="window.location.href='/update_profile/{{ x.id }}'"><em>{{ x.role }}</em></td>
+                            <td class="data" onclick="window.location.href='/update_profile/{{ x.id }}'">{{ x.department }}</td>
+                            <td class="data">
+                                <button type="submit" onclick="return confirm('Are you sure you wish to delete the user \n  {{ x.user.email }} : {{ x.first_name }} {{ x.last_name }} ?');" style="background-color: transparent; border: none; width: 50px; margin-right: 150px;">
+                                    <span class="material-icons" style="color: maroon;">delete</span>
+                                </button>
+                            </td>
+                        </tr>
+                    </form>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+               
     </div>  
  
 

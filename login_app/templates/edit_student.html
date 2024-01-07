@@ -193,6 +193,24 @@ p<!DOCTYPE html>
             border-radius: 20px;
             width: 180px;
         }
+
+        
+        .save-btn {
+            background-color: rgb(0, 85, 0);
+            color: white;
+            width: 250px;
+            border: none;
+            cursor: pointer;
+        }
+
+        .save-btn:hover {
+            background-color: #004225;
+        }
+
+        button:hover{
+            background-color: #510400;
+            cursor: pointer;
+        }
     </style>
 </head>
 <body>
@@ -231,7 +249,7 @@ p<!DOCTYPE html>
                     <tr>
                         <td style="width: 10vw;"><label class="table-label" for="student_number">Student Number:</label></td>
                         <td style="width: 50%;">{{ student_form.student_number }}</td>                        
-                        <td style="width: 100px; padding-left: 6.5%;"><input type="submit" value="Save" style="background-color: rgb(0, 85, 0); color: white; width: 180px;"></td>
+                        <td style="width: 100px; padding-left: 6.5%;"><input class="save-btn" type="submit" value="Save" style="width: 180px;"></td>
                     </tr>
                     <tr>
                         <td style="width: 10vw;"><label class="table-label" for="advisor">Advisor:</label></td>
@@ -239,7 +257,7 @@ p<!DOCTYPE html>
                         <td style="width: 100px; padding-left: 6.5%;"><button type="button" onclick="window.location.href='/manage_students'">Back</a></button></td>
                     </tr>
                 </table>
-                <table style="width: 60vw; margin-top: 40px; margin-left: 30px;">
+                <table style="width: 70vw; margin-top: 40px; margin-left: 30px;">
                     <tr>
                         <td class="labels" ><label class="table-label" for="first_name">First Name:</label></td>
                         <td class="inputs">{{ student_form.first_name }}</td>

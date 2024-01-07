@@ -61,6 +61,11 @@
             color: maroon;
         }
 
+        .grade-subject:hover{
+            background-color: #510400;
+            cursor: pointer;
+        }
+
         .logout{
             color: white;
             background-color: maroon;
@@ -136,6 +141,11 @@
 
         .data{
             color: gray;
+        }
+
+        button:hover{
+            background-color: #510400;
+            cursor: pointer;
         }
 
     </style>
@@ -244,29 +254,32 @@
         </form>
         <br/>
         <br/>
-        <table >
-            {% for x in registrations %}
-            <form id="{{ x.student.id }} form" method="POST" action="{% url 'update_grade' x.id %}">
-            {% csrf_token %}
-            <tr>
-            <td style="font-weight: 600; margin-left: 100px;">{{ x.student.first_name }} {{ x.student.last_name }}</td>
-            <td><em>{{ x.student.student_number }}</em></td>
-            <td><em>{{ x.student.program }}</em></td>
-            <td class="data">
-                <select name="grade" id="{{ x.student.id }}" class="grade-dropdown">
-                    {% for choice in grade_choices %}
-                    {% if choice == x.grade %}
-                    <option value="{{ choice }}" selected>{{ choice }}</option>
-                    {% else %}
-                    <option value="{{ choice }}">{{ choice }}</option>
-                    {% endif %}
-                    {% endfor%}
-                </select> 
-            </td>
-            </tr>
-            </form>
-            {% endfor %}
-        </table>        
+        <div style="max-height: 70vh; overflow-y: auto;">
+            <table >
+                {% for x in registrations %}
+                <form id="{{ x.student.id }} form" method="POST" action="{% url 'update_grade' x.id %}">
+                {% csrf_token %}
+                <tr>
+                <td style="font-weight: 600; margin-left: 100px;">{{ x.student.first_name }} {{ x.student.last_name }}</td>
+                <td><em>{{ x.student.student_number }}</em></td>
+                <td><em>{{ x.student.program }}</em></td>
+                <td class="data">
+                    <select name="grade" id="{{ x.student.id }}" class="grade-dropdown">
+                        {% for choice in grade_choices %}
+                        {% if choice == x.grade %}
+                        <option value="{{ choice }}" selected>{{ choice }}</option>
+                        {% else %}
+                        <option value="{{ choice }}">{{ choice }}</option>
+                        {% endif %}
+                        {% endfor%}
+                    </select> 
+                </td>
+                </tr>
+                </form>
+                {% endfor %}
+            </table>        
+        </div>
+        
     </div>  
 
     <div class="footer">

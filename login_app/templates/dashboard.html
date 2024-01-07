@@ -122,6 +122,12 @@
         tr{
             height: 60px;
         }
+
+        button:hover{
+            background-color: #510400;
+            cursor: pointer;
+        }
+
 </style>
 <body> 
     <div class="navbar"> 
@@ -225,7 +231,7 @@
                         <td style="width: 60%;"><input type="text" id="staff_id" name="staff_id" value="{{ x.staff_id }}" required readonly></td>
                     </tr>
                 </table>
-                <table style="width: 60vw; padding-top: 2%; margin-left: 30px;">
+                <table style="width: 70vw; padding-top: 2%; margin-left: 30px;">
                     <tr>
                         <td class="labels"><label class="table-label" for="first_name">First Name:</label></td>
                         <td class="inputs"><input type="text" id="first_name" name="first_name" value="{{ x.first_name }}" required readonly></td>
@@ -282,6 +288,14 @@
         if (button.textContent === "Edit") {
             button.textContent = "Save";
             button.style.backgroundColor = "rgb(0, 85, 0)";
+
+            button.addEventListener('mouseenter', function() {
+                button.style.backgroundColor = "#004225";
+            });
+
+            button.addEventListener('mouseleave', function() {
+                button.style.backgroundColor = "rgb(0, 85, 0)";
+            });
         } else {
             button.textContent = "Edit";
             button.style.backgroundColor = "rgb(128, 0, 0)";

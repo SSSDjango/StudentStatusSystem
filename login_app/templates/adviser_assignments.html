@@ -142,7 +142,11 @@
             color: white;
             font-weight: bold;
         }
-
+        
+        button:hover{
+            background-color: #510400;
+            cursor: pointer;
+        }
 </style>
 <body> 
     <div class="navbar">
@@ -197,7 +201,7 @@
     </div>
     </form>
 
-    <div class="students">
+    <div class="students" style="max-height: 70vh; overflow-y: auto;">
         <table>
             {% for x in students %}
                 <form id="{{ x.id }} form" method="POST" action="{% url 'update_advisor' x.id %}"> {% csrf_token %}

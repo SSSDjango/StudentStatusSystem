@@ -193,6 +193,12 @@ p<!DOCTYPE html>
             border-radius: 20px;
             width: 180px;
         }
+
+        button:hover{
+            background-color: #510400;
+            cursor: pointer;
+        }
+
         
     </style>
 </head>
@@ -242,21 +248,24 @@ p<!DOCTYPE html>
         </form>
     
         <br>
-        <table style="margin-left: 15%;">
-            <label style="margin-left: 275px;">Registered Students</label>
-            <br><br>
-            {% for x in students %}
-                <tr class="userRow">
-                    <td style="left: 0;"><i class="w3-xxlarge material-icons" style="color: gray; border: 1px solid gray; border-radius: 100%;">person</i></td>
-                    <td style="font-weight: 600;">{{ x.first_name }} {{ x.last_name }}</td>
-                    <td class="data"><em>{{ x.student_number }}</em></td>
-                    <td class="data" style="padding-right: -100px; margin-right: 0;"><em>{{ x.email }}</em></td>
-                    <td class="data" style="padding-left: 0; padding-right: 30px;"><em>{{ x.program }} </em></td>
-                    <td class="data"><em>{{ x.first_enrollment.title }} </em></td>
-                    <td></td>
-                </tr>
-            {% endfor %}
-        </table>        
+        <div style="margin-left: 3%; max-height: 70vh; overflow-y: auto; overflow-x: hidden;" >
+            <table>
+                <label style="margin-left: 275px;">Registered Students</label>
+                <br><br>
+                    {% for x in students %}
+                    <tr class="userRow">
+                        <td style="left: 0;"><i class="w3-xxlarge material-icons" style="color: gray; border: 1px solid gray; border-radius: 100%;">person</i></td>
+                        <td style="font-weight: 600;">{{ x.first_name }} {{ x.last_name }}</td>
+                        <td class="data"><em>{{ x.student_number }}</em></td>
+                        <td class="data" style="padding-right: -100px; margin-right: 0;"><em>{{ x.email }}</em></td>
+                        <td class="data" style="padding-left: 0; padding-right: 30px;"><em>{{ x.program }} </em></td>
+                        <td class="data"><em>{{ x.first_enrollment.title }} </em></td>
+                        <td></td>
+                    </tr>
+                {% endfor %}
+                
+            </table>  
+        </div>      
     </div>  
 
     <div class="footer">

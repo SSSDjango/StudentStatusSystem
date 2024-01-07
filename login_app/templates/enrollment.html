@@ -144,6 +144,22 @@
             border: 1px solid gray;
         }
 
+        button:hover{
+            background-color: #510400;
+            cursor: pointer;
+        }
+
+        .add-student{
+            background-color: maroon;
+            color: white;
+            cursor: pointer;
+        }
+
+        .add-student:hover{
+            background-color: #510400;
+            color: white;
+            cursor: pointer;
+        }
 </style>
 <body> 
     <div class="navbar"> 
@@ -185,7 +201,7 @@
     </div>
     </form>
 
-    <div class="subjects">
+    <div class="subjects" style="max-height: 70vh; overflow-y: auto;">
         <table style="width: 90vw;">
             {% for x in subjects %}
               <tr>
@@ -197,7 +213,7 @@
               <td style="padding-right: 120px;">
                 <form method="POST" action="{% url 'add_course_students' x.id %}">
                     {% csrf_token %}
-                    <input type="submit" value="Add Students" style="padding-left: 0; padding-right: 0;">
+                    <input class="add-student" type="submit" value="Add Students" style="padding-left: 0; padding-right: 0;">
                 </form>
               </td>
               </tr>

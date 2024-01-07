@@ -234,6 +234,11 @@
             background-color: lightgray;
         }
 
+        button:hover{
+            background-color: #510400;
+            cursor: pointer;
+        }
+
     </style>
 </head>
 <body>
@@ -275,14 +280,17 @@
 
         <br/>
         <br/>
-        <table>
-            {% for term in terms %}
-            <tr>
-                <td onclick="window.location.href='/academic_terms/{{ term.id }}'"><label style="margin-left: 7%;">{{ term.title }}</label></td>
-                <td>{% if term.current_term == 1 %} <em>Current Term<em>{% endif %}</td>
-            </tr>
-            {% endfor %}
-        </table>        
+        <div style="max-height: 70vh; overflow-y: auto;">
+            <table>
+                {% for term in terms %}
+                <tr>
+                    <td onclick="window.location.href='/academic_terms/{{ term.id }}'"><label style="margin-left: 7%;">{{ term.title }}</label></td>
+                    <td>{% if term.current_term == 1 %} <em>Current Term<em>{% endif %}</td>
+                </tr>
+                {% endfor %}
+            </table>  
+        </div>
+              
     </div>  
 
     <div class="footer">

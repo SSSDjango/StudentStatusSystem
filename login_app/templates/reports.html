@@ -189,6 +189,11 @@
         table tr:hover {
             background-color: lightgray;
         }
+
+        button:hover{
+            background-color: #510400;
+            cursor: pointer;
+        }
     </style>
 </head>
 <body>
@@ -275,12 +280,15 @@
         </form>
         <br/>
         <br/>
-        <table>
-            {% for x in terms %}
-            <tr><td><label style="margin-left: 7%;" onclick="window.location.href='/reports/{{ x.id }}'" > {{ x.title }}</label></td></tr>
-            {% endfor %}
-
-        </table>        
+        <div style="max-height: 70vh; overflow-y: auto;">
+            <table>
+                {% for x in terms %}
+                <tr><td><label style="margin-left: 7%;" onclick="window.location.href='/reports/{{ x.id }}'" > {{ x.title }}</label></td></tr>
+                {% endfor %}
+    
+            </table>  
+        </div>
+              
     </div>  
 
     <div class="footer">

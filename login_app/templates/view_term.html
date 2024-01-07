@@ -142,6 +142,11 @@
             background-color: lightgray;
         }
 
+        button:hover{
+            background-color: #510400;
+            cursor: pointer;
+        }
+
     </style>
 </head>
 <body>
@@ -163,7 +168,7 @@
         <a href="/admin_dashboard">Manage User Roles</a>
         <br />
         <label>Academics</label>
-        <a href="{% url 'academic_terms' %}">Academic Term</a>
+        <a href="{% url 'academic_terms' %}"><u>Academic Term</u></a>
         <a href="{% url 'courses_offered' %}">Courses Offered</a>
         <form action="{% url 'perform_logout' %}" method="post">
             {% csrf_token %}
@@ -250,17 +255,19 @@
 
         <br>
         <label style="margin-left: 20%;">{{ no_subjects }}</label>
-        <table>
-            {% for x in subjects %}
-            <tr onclick="window.location.href='/edit_course/{{ x.id }}'">
-            <td style="font-weight: 600; margin-left: 100px;">{{ x.subject_offered.subject_name }}</td>
-            <td><em>{{ x.subject_offered.subject_title }}</em></td>
-            <td><em>{{ x.section }} - {{ x.units }} units</em></td>
-            <td><em>{{ x.professor.first_name }} {{ x.professor.last_name }} </em></td>
-            <td><em>{{ x.enrolled }} enrolled</em></td>
-            </tr>
-            {% endfor %}
-        </table>        
+        <div style="max-height: 60vh; overflow-y: auto;">
+            <table>
+                {% for x in subjects %}
+                <tr onclick="window.location.href='/edit_course/{{ x.id }}'">
+                <td style="font-weight: 600; margin-left: 100px;">{{ x.subject_offered.subject_name }}</td>
+                <td><em>{{ x.subject_offered.subject_title }}</em></td>
+                <td><em>{{ x.section }} - {{ x.units }} units</em></td>
+                <td><em>{{ x.professor.first_name }} {{ x.professor.last_name }} </em></td>
+                <td><em>{{ x.enrolled }} enrolled</em></td>
+                </tr>
+                {% endfor %}
+            </table>        
+        </div>
     </div>  
 
     <form id='set_current' method="POST" action="{% url 'set_current_term' term.id %}"> {% csrf_token %}

@@ -125,6 +125,23 @@
             cursor: pointer;
             color: gray;
         }
+
+        .save-btn {
+            background-color: rgb(0, 85, 0);
+            color: white;
+            width: 180px;
+            border: none;
+            cursor: pointer;
+        }
+
+        .save-btn:hover {
+            background-color: #004225;
+        }
+
+        button:hover{
+            background-color: #510400;
+            cursor: pointer;
+        }
 </style>
 <body> 
     <div class="navbar">
@@ -162,16 +179,8 @@
                 <table style="padding-top: 30px; width: 60vw;">
                     <tr>
                         <td style="width: 5vw;"><label class="table-label" for="username">Username:</label></td>
-                        <td style="width: 45%;">
-                            <div style="position: relative;">
-                                {{ form.username }}
-                                <!-- <div class="question-mark-container" style="position: absolute; top: 10px; right: 0; margin-right: 15px;">
-                                    <span class="help-icon">?</span>
-                                    <span class="help-text" style="display: none;">{{ form.username.help_text }}</span>
-                                </div> -->
-                            </div>
-                        </td>                        
-                        <td style="width: 150px; padding-left: 6.5%;"><input type="submit" value="Save" style="background-color: rgb(0, 85, 0); color: white; width: 180px;"></td>
+                        <td style="width: 45%;">{{ form.username }}</td>                        
+                        <td style="width: 150px; padding-left: 6.5%;"><input class="save-btn" type="submit" value="Save" ></td>
                     </tr>
                     <tr>
                         <td style="width: 5vw;"><label class="table-label" for="staff_id">Staff ID:</label></td>

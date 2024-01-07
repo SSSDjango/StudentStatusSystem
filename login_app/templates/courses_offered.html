@@ -78,6 +78,7 @@
         table tr {
             border-top: 1px solid lightgrey; 
             border-bottom: 1px solid lightgrey; 
+            cursor: pointer;
         }
 
         .table-label{
@@ -168,7 +169,7 @@
             border: 1px solid gray;
         }
 
-        table tr:hover {
+        tbody tr:hover {
             background-color: lightgray;
         }
 
@@ -180,6 +181,16 @@
 
         .data{
             color: gray;
+        }
+
+        button:hover{
+            background-color: #510400;
+            cursor: pointer;
+        }
+
+        span:hover{
+            border: 1px solid maroon;
+            border-radius: 50%;
         }
 </style>
 <body> 
@@ -216,7 +227,7 @@
     </div>
     </form>
 
-    <div style="margin-top: 2%;">
+    <div style="margin-top: 2%; max-height: 65vh; overflow-y: auto;">
         <table>
             <thead>
                 <tr>

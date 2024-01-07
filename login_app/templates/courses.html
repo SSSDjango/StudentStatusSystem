@@ -142,6 +142,11 @@
             background-color: lightgray;
         }
 
+        button:hover{
+            background-color: #510400;
+            cursor: pointer;
+        }
+
     </style>
 </head>
 <body>
@@ -239,17 +244,20 @@
         </form>
 
         <label style="margin-left: 20%;">{{ no_subjects }}</label>
-        <table>
-            {% for x in subjects %}
-            <tr onclick="window.location.href='/view_course/{{ x.id }}'">
-            <td style="font-weight: 600; margin-left: 100px;">{{ x.subject_offered.subject_name }}</td>
-            <td><em>{{ x.subject_offered.subject_title }}</em></td>
-            <td><em>{{ x.section }} - {{ x.units }} units</em></td>
-            {% if user_role == 'STAFF' %} <td><em>{{ x.professor.first_name }} {{ x.professor.last_name }} </em></td> {% endif %}
-            <td><em>{{ x.enrolled }} enrolled</em></td>
-            </tr>
-            {% endfor %}
-        </table>        
+        <div style="max-height: 70vh; overflow-y: auto;">
+            <table>
+                {% for x in subjects %}
+                <tr onclick="window.location.href='/view_course/{{ x.id }}'">
+                <td style="font-weight: 600; margin-left: 100px;">{{ x.subject_offered.subject_name }}</td>
+                <td><em>{{ x.subject_offered.subject_title }}</em></td>
+                <td><em>{{ x.section }} - {{ x.units }} units</em></td>
+                {% if user_role == 'STAFF' %} <td><em>{{ x.professor.first_name }} {{ x.professor.last_name }} </em></td> {% endif %}
+                <td><em>{{ x.enrolled }} enrolled</em></td>
+                </tr>
+                {% endfor %}
+            </table>    
+        </div>
+            
     </div>  
 
     <div class="footer">

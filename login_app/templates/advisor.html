@@ -153,6 +153,11 @@
         background-color: lightgray;
         }
 
+        button:hover{
+            background-color: #510400;
+            cursor: pointer;
+        }
+
     </style>
 </head>
 <body>
@@ -246,19 +251,22 @@
     
         <br>
         <br>
-        <table>
-            {% for x in students %}
-                <tr class="userRow" onclick="window.location.href='/view_student/{{ x.id }}'">
-                    <td><i class="w3-xxlarge material-icons" style="color: gray; border: 1px solid gray; border-radius: 100%;">person</i></td>
-                    <td style="font-weight: 600;">
-                    <a href="/view_student/{{ x.id }}">{{ x.first_name }} {{ x.last_name }}</a> 
-                    </td>
-                    <td class="data"><em>{{ x.student_number }}</em></td>
-                    <td class="data"><em>{{ x.program }}</em></td>
-                    <td class="data"><em>{{ x.email }}</em></td>
-                </tr>
-            {% endfor %}
-        </table>        
+        <div style="max-height: 70vh; overflow-y: auto;">
+            <table>
+                {% for x in students %}
+                    <tr class="userRow" onclick="window.location.href='/view_student/{{ x.id }}'">
+                        <td><i class="w3-xxlarge material-icons" style="color: gray; border: 1px solid gray; border-radius: 100%;">person</i></td>
+                        <td style="font-weight: 600;">
+                        <a href="/view_student/{{ x.id }}">{{ x.first_name }} {{ x.last_name }}</a> 
+                        </td>
+                        <td class="data"><em>{{ x.student_number }}</em></td>
+                        <td class="data"><em>{{ x.program }}</em></td>
+                        <td class="data"><em>{{ x.email }}</em></td>
+                    </tr>
+                {% endfor %}
+            </table>        
+        </div>
+        
     </div>  
 
     <div class="footer">

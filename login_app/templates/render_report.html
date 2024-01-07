@@ -175,7 +175,13 @@
         .data {
             color: gray;
         }
-    </style>
+
+        button:hover{
+            background-color: #510400;
+            cursor: pointer;
+        }
+
+</style>
 
 </head>
 <body>
@@ -212,7 +218,7 @@
         <label>Grades</label>
         <a href="/courses">By Course</a>
         <label for="SPLink" onclick="window.location.href='/advisor_view'" style="cursor: pointer;">Special Project</label>
-        <label for="Reports" onclick="window.location.href='/thesis_reports'" style="cursor: pointer;"><u>Reports</u></label>
+        <label for="Reports" onclick="window.location.href='/reports'" style="cursor: pointer;"><u>Reports</u></label>
         <form action="{% url 'perform_logout' %}" method="post">
             {% csrf_token %}
             <button class="logout" type="submit" style="margin-left: 0;">Log Out</button>
@@ -258,7 +264,7 @@
             <label style="margin-left: 20%;">{{ term.title }}</label>
             <button class="change_term" onClick="javascript:history.go(-1);" style="float: right; margin-right: 5%;">Back</button>
         </div>
-        <div style="width: 86vw; margin-left: 250px; overflow-x: auto;">
+        <div style="width: 86vw; margin-left: 250px; overflow-x: auto; max-height: 70vh; overflow-y: auto;">
             <table class="sortable" style="border-collapse: collapse; width: 80vw;"> 
                 <thead >
                     <tr>
