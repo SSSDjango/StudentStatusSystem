@@ -244,7 +244,7 @@
             {% for x in offerings %}
             <form id="delete {{ x.id }} form" method="POST" action="{% url 'delete_offering' x.id %}"> {% csrf_token %}
                 <tr class="userRow">
-                    <td onclick="window.location.href='/edit_offering/{{ x.id }}'" style="font-weight: 600; font-size: 18px; padding-left: 100px;">{{ x.subject_name }}</td>
+                    <td onclick="window.location.href='/edit_offering/{{ x.id }}'" style="font-weight: 600; font-size: 18px; padding-left: 100px; width: 300px;">{{ x.subject_name }}</td>
                     <td onclick="window.location.href='/edit_offering/{{ x.id }}'" class="data"><em>{{ x.subject_title }}</em></td>
                     <td onclick="window.location.href='/edit_offering/{{ x.id }}'" class="data"><input type="checkbox" {% if x.lecture == 1 %} checked {% endif %} disabled></td>
                     <td onclick="window.location.href='/edit_offering/{{ x.id }}'" class="data"><input type="checkbox" {% if x.lab == 1 %} checked {% endif %} disabled></td>

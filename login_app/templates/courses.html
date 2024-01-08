@@ -252,8 +252,9 @@
                     <tr style="height: 60px;">
                         <th style="font-size: large; text-align: left; padding-left: 15px;"><em>Course</em></th>
                         <th style="font-size: large; text-align: left; padding-left: 15px;"><em>Course Title</em></th>
-                        <th style="font-size: large; text-align: left; padding-left: 15px;"><em>Lecture</em></th>
-                        <th style="font-size: large; text-align: left; padding-left: 15px;"><em>Laboratory</em></th>
+                        <th style="font-size: large; text-align: left; padding-left: 15px;"><em>Section</em></th>
+                        <th style="font-size: large; text-align: left; padding-left: 15px;"><em>Professor</em></th>
+                        <th style="font-size: large; text-align: left; padding-left: 15px;"><em>Enrolled</em></th>
                     </tr>
                 </thead>
                 <tbody>
@@ -261,7 +262,7 @@
                 <tr class="userRow" onclick="window.location.href='/view_course/{{ x.id }}'">
                 <td style="font-weight: 600; margin-left: 100px;">{{ x.subject_offered.subject_name }}</td>
                 <td><em>{{ x.subject_offered.subject_title }}</em></td>
-                <td><em>{{ x.section }} - {{ x.units }} units</em></td>
+                <td><em>{{ x.section }} - {{ x.subject_offered.units }} units</em></td>
                 {% if user_role == 'STAFF' %} <td><em>{{ x.professor.first_name }} {{ x.professor.last_name }} </em></td> {% endif %}
                 <td><em>{{ x.enrolled }} enrolled</em></td>
                 </tr>
