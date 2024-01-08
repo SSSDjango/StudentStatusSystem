@@ -64,6 +64,7 @@ def perform_login(request):
 
 
 def create_user(request):
+    context={}
     user = None
     profile_form = None
     form_errors = {}
@@ -91,13 +92,11 @@ def create_user(request):
     else:
         form = ExtendedUserCreationForm()
         profile_form = UserProfileForm()
-
-    context = {
-        'form': form,
-        'profile_form': profile_form,
-        'form_errors': form_errors,
-        'profile_errors': profile_errors,
-    }
+        
+    context['form'] = form
+    context['profile_form'] = profile_form
+    context['form_errors'] = form_errors
+    context['profile_errors']
 
     return render(request, 'create_user.html', context)
 
@@ -787,7 +786,7 @@ def academic_term_page(request):
         term_filter = ''
     else:
         term_filter = request.POST.get('term')
-x
+
     context['terms'] = Term.objects.filter(title__contains=term_filter)
     context['search'] = term_filter
 
