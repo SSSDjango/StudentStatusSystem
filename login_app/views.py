@@ -788,7 +788,7 @@ def academic_term_page(request):
     else:
         term_filter = request.POST.get('term')
 
-    context['terms'] = Term.objects.filter(title__contains=term_filter)
+    context['terms'] = Term.objects.filter(title__contains=term_filter).order_by('-current_term','start_date') 
     context['search'] = term_filter
 
     return render(request, 'academic_term.html', context)
