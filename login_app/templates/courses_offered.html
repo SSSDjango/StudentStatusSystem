@@ -141,7 +141,7 @@
 
         .add{
             margin-top: 50px;
-            margin-left: 50%;
+            margin-left: 55%;
             width: 15vw;
             background-color: maroon;
             border: none;
@@ -222,8 +222,8 @@
     <form action="{% url 'courses_offered' %}" method="POST" id="filter" > {% csrf_token %}
     <div class="buttonDiv">
         <button class="add" type="button" onclick="window.location.href='/create_offering'">Add Offering</button>
-        <input type="text" class="search-input" name="search" value="{{ search }}" placeholder="Search by name...">
-        <button type="submit" hidden>
+        <input type="text" class="search-input" name="search" value="{{ search }}" placeholder="Search by course name...">
+        <button style="width: 45px; margin-left: -50px; border-radius: 46%; background-color: transparent; color: gray;" type="submit">></button>
     </div>
     </form>
 

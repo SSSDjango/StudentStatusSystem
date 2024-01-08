@@ -196,9 +196,13 @@
                     {% endif %}
                 {% endfor %}
             </select>
-            <button type="submit" hidden></button>
-            <input value='{{ student_number_filter }}' id="student_number" name='student_number' type="text" class="search-input" placeholder="Search by student_number...">
+            <!-- <button type="submit" hidden></button> -->
+            <input value='{{ student_number_filter }}' id="student_number" name='student_number' type="text" class="search-input" placeholder="Search by student number...">
+            <button style="width: 45px; margin-left: -50px; border-radius: 46%; background-color: transparent; color: gray;" class="register" type="submit">></button>
+
             <input value='{{ last_name_filter }}' id="last_name" name='last_name' type="text" class="search-input" placeholder="Search by last name...">
+            <button style="width: 45px; margin-left: -50px; border-radius: 46%; background-color: transparent; color: gray;" class="register" type="submit">></button>
+
             <button style="margin-left: 25px;" onclick="window.location.href='/enrollment'" type="button">Back</button>
     </div>
         </div>
@@ -206,13 +210,22 @@
 
     <div class="subjects" style="max-height: 70vh; overflow-y: auto;">
         <table>
+            <thead >
+                <tr style="height: 60px;">
+                    <th style="font-size: large; text-align: left; padding-left: 15px;"><em>Student Name</em></th>
+                    <th style="font-size: large; text-align: left; padding-left: 15px;"><em>Student Number</em></th>
+                    <th style="font-size: large; text-align: left; padding-left: 15px;"><em>Undergraduate Program</em></th>
+                    <th style="font-size: large; text-align: left; padding-left: 15px;"><em>Graduate</em></th>
+                </tr>
+            </thead>
+            <tbody>
             {% for x in students %}
             <form id="{{ x.id }} form" method="POST" action="{% url 'update_enrollment' %}">
             {% csrf_token %}
             <input name="course_id" value="{{ course_id }}" hidden></input>
             <input name="student_id" value="{{ x.id }}" hidden></input>
             <tr>
-            <td style="font-weight: 600; margin-left: 100px;">{{ x.first_name }} {{ x.last_name }}</td>
+            <td style="font-weight: 600; ">{{ x.first_name }} {{ x.last_name }}</td>
             <td><em>{{ x.student_number }}</em></td>
             <td><em>{{ x.program }}</em></td>
                 <td style="padding-right: 100px ;"><em><input class="enrolled-checkbox" id="{{ x.id }}" type="checkbox"
@@ -227,6 +240,7 @@
             </tr>
             </form>
             {% endfor %}
+            </tbody>
         </table>      
     </div>
     

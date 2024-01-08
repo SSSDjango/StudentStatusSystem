@@ -263,9 +263,15 @@ p<!DOCTYPE html>
                     {% endif %}
                 {% endfor %}
             </select>
-            <input style="margin-top: 50px; margin-left:1%; width: 310px;" value="{{ term_filter }}" type="text" name="term" class="search-input" placeholder="Search by first enrollment term title...">
+            <input style="margin-top: 50px; margin-left:1%; width: 350px;" value="{{ term_filter }}" type="text" name="term" class="search-input" placeholder="Search by first enrollment term title...">
+            <button style="width: 45px; margin-left: -50px; border-radius: 46%; background-color: transparent; color: gray;" class="register" type="submit">></button>
+
             <input style="margin-top: 50px; margin-left:1%; width: 290px;" value="{{ student_number_filter }}" type="text" name="student_number" class="search-input" placeholder="Search by student number...">
+            <button style="width: 45px; margin-left: -50px; border-radius: 46%; background-color: transparent; color: gray;" class="register" type="submit">></button>
+
             <input style="margin-top: 50px; margin-left:1%; width: 290px;" value="{{ last_name_filter }}" type="text" name="last_name" class="search-input" placeholder="Search by last name...">
+            <button style="width: 45px; margin-left: -50px; border-radius: 46%; background-color: transparent; color: gray;" class="register" type="submit">></button>
+
             <button style="width: 100px; margin-left:1%;" type="button" onclick="window.location.href='/registration'">Back</a></button>
             <input type="submit" hidden></input>
         </div>

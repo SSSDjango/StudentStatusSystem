@@ -274,8 +274,8 @@
     <div class="compiledTerms" style="width: fit-content;">
         <form action="{% url 'reports' %}" method="POST"> {% csrf_token %}
         <div>
-            <!-- <a><button class="back" type="submit">Search</button></a> -->
-            <input style="margin-left: 60%; margin-top: 2%;" value='{{ search }}' type="text" name='title' class="search-input" placeholder="Search...">
+            <input style="margin-left: 50%; margin-top: 2%;" value='{{ search }}' type="text" name='title' class="search-input" placeholder="Search...">
+            <button style="width: 100px; margin-left: 0;" class="grade-subject" type="submit">Search</button>
         </div>
         </form>
         <br/>

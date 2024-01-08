@@ -256,6 +256,15 @@
         <br/>
         <div style="max-height: 70vh; overflow-y: auto;">
             <table >
+                <thead >
+                    <tr style="height: 60px;">
+                        <th style="font-size: large; text-align: left; padding-left: 15px;"><em>Student Name</em></th>
+                        <th style="font-size: large; text-align: left; padding-left: 15px;"><em>Student Number</em></th>
+                        <th style="font-size: large; text-align: left; padding-left: 15px;"><em>Undergraduate Program</em></th>
+                        <th style="font-size: large; text-align: left; padding-left: 15px;"><em>Grade</em></th>
+                    </tr>
+                </thead>
+                <tbody>
                 {% for x in registrations %}
                 <form id="{{ x.student.id }} form" method="POST" action="{% url 'update_grade' x.id %}">
                 {% csrf_token %}
@@ -277,6 +286,7 @@
                 </tr>
                 </form>
                 {% endfor %}
+                </tbody>
             </table>        
         </div>
         

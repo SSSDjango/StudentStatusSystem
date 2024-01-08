@@ -149,8 +149,9 @@
             color: gray;
         }
 
-        table tr:hover {
-        background-color: lightgray;
+        .userRow:hover {
+            background-color: lightgray;
+            cursor: pointer;
         }
 
         button:hover{
@@ -253,6 +254,16 @@
         <br>
         <div style="max-height: 70vh; overflow-y: auto;">
             <table>
+                <thead >
+                    <tr style="height: 60px;">
+                        <th style="font-size: large; text-align: left; padding-left: 15px;"><em></em></th>
+                        <th style="font-size: large; text-align: left; padding-left: 15px;"><em>Student Name</em></th>
+                        <th style="font-size: large; text-align: left; padding-left: 15px;"><em>Student Number</em></th>
+                        <th style="font-size: large; text-align: left; padding-left: 15px;"><em>Undergraduate Program</em></th>
+                        <th style="font-size: large; text-align: left; padding-left: 15px;"><em>Email Address</em></th>
+                    </tr>
+                </thead>
+                <tbody>
                 {% for x in students %}
                     <tr class="userRow" onclick="window.location.href='/view_student/{{ x.id }}'">
                         <td><i class="w3-xxlarge material-icons" style="color: gray; border: 1px solid gray; border-radius: 100%;">person</i></td>
@@ -264,6 +275,7 @@
                         <td class="data"><em>{{ x.email }}</em></td>
                     </tr>
                 {% endfor %}
+                </tbody>
             </table>        
         </div>
         

@@ -104,9 +104,10 @@ p<!DOCTYPE html>
             width: 95vw; 
         }
 
-        .userRow {
+        table tr {
             border-top: 1px solid lightgrey; 
             border-bottom: 1px solid lightgrey; 
+            height: 60px;
         }
 
         table td {
@@ -181,10 +182,6 @@ p<!DOCTYPE html>
             width: 275px;
         }
 
-        tr{
-            height: 60px;
-        }
-
         button {
             color: white;
             background-color: maroon;
@@ -243,27 +240,38 @@ p<!DOCTYPE html>
             <!-- view of all students _ filter because this will include all students _ dropdown to change enrollment (Registration status) -->
             <button type="button" class="register-old" onclick="window.location.href='/manage_registration'" style="width: 270px;">Manage Students Registration</button>
             <input value="{{ search }}" type="text" name="name" class="search-input" placeholder="Search by last name...">
-            <input type="submit" hidden></input>
+            <button style="width: 45px; margin-left: -50px; border-radius: 46%; background-color: transparent; color: gray;" class="register" type="submit">></button>
         </div>
         </form>
     
         <br>
+        <label style="margin-left: 275px;">Registered Students</label>
+        <br><br>
         <div style="margin-left: 3%; max-height: 70vh; overflow-y: auto; overflow-x: hidden;" >
             <table>
-                <label style="margin-left: 275px;">Registered Students</label>
-                <br><br>
+                <thead >
+                    <tr style="height: 60px;">
+                        <th style="font-size: large; text-align: left; padding-left: 15px;"><em> </em></th>
+                        <th style="font-size: large; text-align: left; padding-left: 15px; width: 150px;"><em>Student Name</em></th>
+                        <th style="font-size: large; text-align: left; padding-left: 15px;"><em>Student Number</em></th>
+                        <th style="font-size: large; text-align: left; padding-left: 15px;"><em>Email Address</em></th>
+                        <th style="font-size: large; text-align: left; padding-left: 15px;"><em>Undergraduate Program</em></th>
+                        <th style="font-size: large; text-align: left; padding-left: 15px;"><em>Academic Term</em></th>
+                    </tr>
+                </thead>
+                <tbody>
                     {% for x in students %}
                     <tr class="userRow">
                         <td style="left: 0;"><i class="w3-xxlarge material-icons" style="color: gray; border: 1px solid gray; border-radius: 100%;">person</i></td>
                         <td style="font-weight: 600;">{{ x.first_name }} {{ x.last_name }}</td>
-                        <td class="data"><em>{{ x.student_number }}</em></td>
+                        <td class="data" style="width: 150px;"><em>{{ x.student_number }}</em></td>
                         <td class="data" style="padding-right: -100px; margin-right: 0;"><em>{{ x.email }}</em></td>
                         <td class="data" style="padding-left: 0; padding-right: 30px;"><em>{{ x.program }} </em></td>
                         <td class="data"><em>{{ x.first_enrollment.title }} </em></td>
                         <td></td>
                     </tr>
                 {% endfor %}
-                
+                </tbody>
             </table>  
         </div>      
     </div>  

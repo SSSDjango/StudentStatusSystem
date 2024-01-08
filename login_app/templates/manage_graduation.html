@@ -202,10 +202,12 @@
                 {% endfor %}
             </select>
             <input style="margin-top: 50px; margin-left:1.5%; width: 300px;" value="{{ student_number_filter }}" type="text" name="student_number" id="student_number" class="search-input" placeholder="Search by student number...">
+            <button style="width: 45px; margin-left: -50px; border-radius: 46%; background-color: transparent; color: gray;" class="register" type="submit">></button>
             <input style="margin-top: 50px; margin-left:1.5%; width: 300px;" value="{{ last_name_filter }}" type="text" name="last_name" id="last_name" class="search-input" placeholder="Search by last name...">
+            <button style="width: 45px; margin-left: -50px; border-radius: 46%; background-color: transparent; color: gray;" class="register" type="submit">></button>
             <button style="margin-left:1.5%;" type="button" onclick=gradAll() >Graduate Qualified</a></button>
             <button style="width: 100px; margin-left:1.5%;" type="button" onclick="window.location.href='/graduation'">Back</a></button>
-            <input type="submit" hidden></input>
+            <!-- <input type="submit" hidden></input> -->
         </div>
     </form>
 
@@ -220,7 +222,7 @@
 
             <thead >
                 <tr>
-                    <th><em>Name</em></th>
+                    <th><em>Student Name</em></th>
                     <th><em>Student Number</em></th>
                     <th><em>Program</em></th>
                     <th><em>Required Units</em></th>
