@@ -7,7 +7,6 @@ from django.contrib.auth.decorators import login_required
 from django.views.decorators.cache import cache_control
 from django.contrib.auth.models import User
 from django.http import JsonResponse
-from login_app.decorators import allowed_users
 
 
 from login_app.forms import ExtendedUserChangeForm, ExtendedUserCreationForm, OfferingCreationForm, RegistrationCreationForm, StudentCreationForm, SubjectChoiceField, SubjectCreationForm, SubjectForm, TermCreationForm, UserProfileForm, TermForm, AdvisorDropdown, UserProfileChangeForm
@@ -93,11 +92,11 @@ def create_user(request):
     else:
         form = ExtendedUserCreationForm()
         profile_form = UserProfileForm()
-
+        
     context['form'] = form
     context['profile_form'] = profile_form
     context['form_errors'] = form_errors
-    context['profile_errors'] = profile_errors
+    context['profile_errors']
 
     return render(request, 'create_user.html', context)
 
@@ -656,9 +655,6 @@ def edit_offering(request, offering_id):
 
     return render(request, 'edit_offering.html', context)
 
-@login_required(login_url="/")
-@cache_control(no_cache=True, must_revalidate=True, no_store=True)
-@allowed_users(allowed_roles=['ADMIN'])
 def course_offerings(request):
     context = {
         'offerings' : OfferedSubject.objects.all(),
@@ -772,8 +768,14 @@ def view_term(request, term_id):
 
 @login_required(login_url="/")
 @cache_control(no_cache=True, must_revalidate=True, no_store=True)
-@allowed_users(allowed_roles=['ADMIN'])
 def academic_term_page(request):
+    # user_id = request.user.id
+    # profile = UserProfile.objects.get(user=user_id)
+    # user_role = profile.role
+    # if user_role != 'ADMIN':
+    #     # Invalid access, update to send message
+    #     return landing_page(request)
+
     context ={}
     currentTerm = Term.objects.get(current_term=1)
     context['term'] = currentTerm
@@ -815,7 +817,6 @@ def manage_tables(request):
 
 @login_required(login_url="/")
 @cache_control(no_cache=True, must_revalidate=True, no_store=True)
-@allowed_users(allowed_roles=['ADMIN'])
 def admin_dashboard(request):
     context ={}
 
