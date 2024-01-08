@@ -81,28 +81,29 @@ def create_user(request):
             profile.save()
             context['message'] = 'User saved!'
             # Redirect or perform any necessary action upon successful form submission
-            return HttpResponseRedirect('/admin_dashboard')  # Replace '/success/' with your desired success URL
+            # Replace '/success/' with your desired success URL
         else:
             form_errors = form.errors.as_json()
             profile_errors = profile_form.errors.as_json()
-            context['message'] = 'User failed saved!'
+            context['message'] = 'User failed to save!'
             # Here you might add additional handling, logging, or error messages
             # depending on your specific needs
 
     else:
         form = ExtendedUserCreationForm()
         profile_form = UserProfileForm()
-        
+
     context['form'] = form
     context['profile_form'] = profile_form
     context['form_errors'] = form_errors
-    context['profile_errors']
+    context['profile_errors'] = profile_errors
 
     return render(request, 'create_user.html', context)
 
 
 def delete_user(request, id):
-    obj = get_object_or_404(User, pk=id)
+    user_profile = get_object_or_404(UserProfile, id=id)
+    obj = get_object_or_404(User, pk=user_profile.user_id)
     if request.method == 'POST':
         obj.delete()
         return landing_page(request)
@@ -731,9 +732,14 @@ def set_current_term(request, term_id):
 
         old_current.current_term = False
         new_current.current_term = True
-        
+
         old_current.save()
         new_current.save()
+
+        enrolled = Student.objects.filter(enrollment='ENROLLED')
+        for student in enrolled:
+            student.enrollment = 'UNENROLLED'
+            student.save(update_fields=["enrollment"])
 
     return redirect(request.META['HTTP_REFERER'])
 
@@ -787,7 +793,7 @@ def academic_term_page(request):
     else:
         term_filter = request.POST.get('term')
 
-    context['terms'] = Term.objects.filter(title__contains=term_filter).order_by('-start_date')
+    context['terms'] = Term.objects.filter(title__contains=term_filter)
     context['search'] = term_filter
 
     return render(request, 'academic_term.html', context)
@@ -1296,3 +1302,25 @@ def view_student(request, student_id):
     context['terms'] = Term.objects.filter(id__in=relevant_term_ids)
 
     return render(request, 'view_student.html', context)
+
+def curriculum_guide(request):
+    context = {}
+    user_id = request.user.id
+    context['user_role'] = UserProfile.objects.get(user=user_id).role
+
+    if 'program' not in request.POST:
+        context['program_filter'] = 'None'
+    else:
+        program_filter = request.POST.get('program')
+        context['program_filter'] = program_filter
+
+    if 'year' not in request.POST:
+        context['year_filter'] = 'None'
+    else:
+        year_filter = request.POST.get('year')
+        context['year_filter'] = year_filter
+
+    context['programs'] = ["BSCS","BSBC","BSAP"]
+    context['years'] = ["1st Year", "2nd Year", "3rd Year", "4th Year"]
+
+    return render(request, 'curriculum_guide.html', context)

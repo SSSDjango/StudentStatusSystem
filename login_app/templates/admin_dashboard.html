@@ -239,7 +239,7 @@
             <table>
                 <tbody>
                     {% for x in userprofiles %}
-                    <form id="delete_{{ x.id }}_form" method="POST" action="{% url 'delete_student' x.id %}">
+                    <form id="delete_{{ x.id }}_form" method="POST" action="{% url 'delete_user' x.id %}">
                         {% csrf_token %}
                         <tr class="userRow" >
                             <td style="left: 0;" onclick="window.location.href='/update_profile/{{ x.id }}'"><i class="w3-xxlarge material-icons" style="color: gray; border: 1px solid gray; border-radius: 100%;">person</i></td>
