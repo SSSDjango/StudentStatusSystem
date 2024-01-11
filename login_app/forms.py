@@ -99,7 +99,7 @@ class TermChoiceField(forms.ModelChoiceField):
 class SubjectCreationForm(forms.ModelForm):
     term = TermChoiceField(queryset=Term.objects.all())
     subject_offered = OfferingChoiceField(queryset=OfferedSubject.objects.all())
-    professor = UserChoiceField(queryset=UserProfile.objects.filter(role__in = ('PROGRAM ADVISOR', 'THESIS ADVISOR', 'NON ADVISER FACULTY'))) 
+    professor = UserChoiceField(queryset=UserProfile.objects.filter(role__in = ('PROGRAM ADVISOR', 'THESIS ADVISOR', 'FACULTY'))) 
     class Meta: 
         model = Subject
         fields = ('term', 'subject_offered', 'professor','section', 'slots', 'class_code')
