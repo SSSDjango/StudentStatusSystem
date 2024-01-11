@@ -7,8 +7,10 @@ from django.contrib.auth.decorators import login_required
 from django.views.decorators.cache import cache_control
 from django.contrib.auth.models import User
 from django.http import JsonResponse
-from django.db.models import ProtectedError
+from django.db.models import ProtectedError, Count
+from django.core.exceptions import ObjectDoesNotExist, MultipleObjectsReturned
 
+from collections import Counter
 
 from login_app.forms import ExtendedUserChangeForm, ExtendedUserCreationForm, OfferingCreationForm, RegistrationCreationForm, StudentCreationForm, SubjectChoiceField, SubjectCreationForm, SubjectForm, TermCreationForm, UserProfileForm, TermForm, AdvisorDropdown, UserProfileChangeForm
 from login_app.models import OfferedSubject, Registration, Student, Subject, Term, UserProfile
@@ -227,63 +229,86 @@ def grade_csv(request):
     subject_pk = request.POST.get('subject')
     print(subject_pk)
     try: 
-        csv_file = request.FILES["csv_file"]
-        if not csv_file.name.endswith('.csv'):
-            messages.error(request,'File is not CSV type')
+        csv_file = request.FILES.get("csv_file")
+        if not csv_file or not csv_file.name.endswith('.csv'):
+            messages.error(request, 'File is not a valid CSV type')
             return landing_page(request)
+        
         file_data = csv_file.read().decode("utf-8")
         lines = file_data.split("\n")
-        # lacks format checking 
-        # check if proper grade, check if student exists (or collect registrations first then mass save later)
+
         for line in lines:
             fields = line.split(",")
-            studentToUpdate = Student.objects.get(student_number=fields[1])
-            registration = Registration.objects.filter(student=studentToUpdate).get(subject=Subject.objects.get(id=subject_pk))
             
-            old_weighted_grade = registration.subject.subject_offered.units * registration.grade
-            print('old weighted_grade = ' + str(old_weighted_grade))
+            # Check if there are enough fields in the line
+            if len(fields) >= 3:
+                student_number = fields[1].strip()
+                new_grade = fields[2].strip()
 
-            new_grade = fields[2].strip()
-            registration.grade = float(new_grade)
+                try:
+                    studentToUpdate = Student.objects.get(student_number=student_number)
+                    registration = Registration.objects.get(student=studentToUpdate, subject__id=subject_pk)
 
-            old_completion = registration.completion
+                    old_weighted_grade = registration.subject.subject_offered.units * registration.grade
+                    print('old weighted_grade = ' + str(old_weighted_grade))
 
-            if new_grade == '0':
-                registration.completion = 'INCOMPLETE'
-            elif new_grade == '5':
-                registration.completion = 'FAILED'
-            elif new_grade == '4':
-                registration.completion = 'CONDITIONAL'
-            else:
-                registration.completion = 'PASSED'
+                    try:
+                        # Convert the grade to a float
+                        grade_value = float(new_grade)
+                    except ValueError:
+                        messages.error(request, f"Invalid grade value: {new_grade}")
+                        continue  # Skip the current line if the grade is not a valid number
 
-            if registration.subject.subject_offered.units != 0:
-                weighted_grade = registration.subject.subject_offered.units * registration.grade
-                print('weighted_grade = ' + str(weighted_grade))
+                    registration.grade = grade_value
 
-                if old_completion == 'INCOMPLETE' and registration.completion != 'INCOMPLETE':
-                    studentToUpdate.completed_units += registration.subject.subject_offered.units
-                    studentToUpdate.total_grade += weighted_grade
-                elif old_completion != 'INCOMPLETE' and registration.completion == 'INCOMPLETE':
-                    studentToUpdate.completed_units -= registration.subject.subject_offered.units
-                    studentToUpdate.total_grade -= old_weighted_grade
-                else: # not INC to not INC
-                    studentToUpdate.total_grade -= old_weighted_grade
-                    studentToUpdate.total_grade += weighted_grade
+                    old_completion = registration.completion
 
-                print('total grade = ' + str(studentToUpdate.total_grade))
-                if studentToUpdate.completed_units != 0:
-                    studentToUpdate.gwa = (studentToUpdate.total_grade)/studentToUpdate.completed_units
-                else:
-                    studentToUpdate.gwa = 0
-                        
-                studentToUpdate.save(update_fields=['completed_units', 'gwa', 'total_grade'])    
-            registration.save(update_fields=['grade', 'completion'])
-            
+                    if new_grade == '0':
+                        registration.completion = 'INCOMPLETE'
+                    elif new_grade == '5':
+                        registration.completion = 'FAILED'
+                    elif new_grade == '4':
+                        registration.completion = 'CONDITIONAL'
+                    else:
+                        registration.completion = 'PASSED'
+
+                    if registration.subject.subject_offered.units != 0:
+                        weighted_grade = registration.subject.subject_offered.units * registration.grade
+                        print('weighted_grade = ' + str(weighted_grade))
+
+                        if old_completion == 'INCOMPLETE' and registration.completion != 'INCOMPLETE':
+                            studentToUpdate.completed_units += registration.subject.subject_offered.units
+                            studentToUpdate.total_grade += weighted_grade
+                        elif old_completion != 'INCOMPLETE' and registration.completion == 'INCOMPLETE':
+                            studentToUpdate.completed_units -= registration.subject.subject_offered.units
+                            studentToUpdate.total_grade -= old_weighted_grade
+                        else:  # not INC to not INC
+                            studentToUpdate.total_grade -= old_weighted_grade
+                            studentToUpdate.total_grade += weighted_grade
+
+                        print('total grade = ' + str(studentToUpdate.total_grade))
+                        if studentToUpdate.completed_units != 0:
+                            studentToUpdate.gwa = (studentToUpdate.total_grade) / studentToUpdate.completed_units
+                        else:
+                            studentToUpdate.gwa = 0
+
+                        studentToUpdate.save(update_fields=['completed_units', 'gwa', 'total_grade'])    
+                    registration.save(update_fields=['grade', 'completion'])
+
+                except ObjectDoesNotExist as e:
+                    messages.error(request, f"Object not found: {repr(e)}")
+                except MultipleObjectsReturned as e:
+                    messages.error(request, f"Multiple objects returned for student number {student_number}: {repr(e)}")
+                except Exception as e:
+                    logging.getLogger("error_logger").error(f"Error processing line: {line}. {repr(e)}")
+                    messages.error(request, f"Error processing line: {line}. {repr(e)}")
+
     except Exception as e:
-        logging.getLogger("error_logger").error("Unable to upload file. "+ repr(e))
-        messages.error(request,"Unable to upload file. "+repr(e))
+        logging.getLogger("error_logger").error("Unable to upload file. " + repr(e))
+        messages.error(request, "Unable to upload file. " + repr(e))
+
     return redirect(request.META['HTTP_REFERER'])
+
 
 @login_required(login_url="/")
 @cache_control(no_cache=True, must_revalidate=True, no_store=True)
@@ -908,6 +933,7 @@ def manage_tables(request):
 @cache_control(no_cache=True, must_revalidate=True, no_store=True)
 def admin_dashboard(request):
     context ={}
+    list(messages.get_messages(request))
 
     user_id = request.user.id
     context['profile'] = UserProfile.objects.filter(user=user_id) 
@@ -1145,6 +1171,7 @@ def report_select(request):
 @cache_control(no_cache=True, must_revalidate=True, no_store=True)
 def render_report(request, term_id):
     context = {}
+    repeats = []
 
     user_id = request.user.id
     context['user_role'] = UserProfile.objects.get(user=user_id).role
@@ -1152,6 +1179,22 @@ def render_report(request, term_id):
     context['term'] = Term.objects.get(id=term_id)
     context['students'] = Student.objects.filter(first_enrollment=term_id)
 
+    students = context['students']
+    highlight = {}
+    for s in students:
+        most_repeats = 0
+        registrations = Registration.objects.filter(student=s).values_list("subject__subject_offered", flat=True)
+        print(registrations)
+        count = Counter(registrations)
+        most_frequent = count.most_common(1)
+        print("The most frequent element in the list is:", most_frequent)
+        for item in most_frequent:
+            most_repeats = item[1]
+        if most_repeats >= 3:
+            repeats.append(s.id)           
+
+    print(repeats)
+    context['repeats'] = repeats
     return render(request, "render_report.html", context)
 
 

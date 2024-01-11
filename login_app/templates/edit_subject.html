@@ -186,7 +186,7 @@
     <br>
 
     <div class="register-profile" style="justify-content: center; align-items: center; margin-top: 4%; margin-left: 35%;">
-        <form method="POST" action="{% url 'edit_subject' term.id %}">
+        <form method="POST" action="{% url 'edit_subject' subject.id %}">
             {% csrf_token %}
             <table class="termTable" style="width: 40vw;">
                 <tr style="border: none;">

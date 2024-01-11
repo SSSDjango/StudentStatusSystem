@@ -269,7 +269,7 @@
     
         <br>
         <br>
-        <div style="max-height: 65vh; overflow-y: auto;">
+        <div style="max-height: 65vh; overflow-y: auto; width: 100vw; overflow-x: hidden;">
             {% for x in terms %}
             <table class="sortable">
                 <label style="margin-left: 275px;">{{ x.title }}</label>
@@ -291,8 +291,8 @@
                             <td class="data">{{ y.subject.subject_offered.subject_name }} - {{ y.subject.subject_offered.subject_title }}</em></td>
                             <td class="data"><em>{{ y.subject.professor.first_name }} {{ y.subject.professor.last_name }}</em></td>
                             <td class="data"><em>{{ y.subject.subject_offered.units }}</em></td>
-                            <td class="data" {% if y.grade > 3 %} style="color: rgb(230, 134, 133);" {% endif %}><em>{{ y.grade }}</em></td>
-                            <td class="data"><em>{{ y.completion }}</em></td>
+                            <td class="data" {% if y.grade > 3 %} style="color: red;" {% endif %}><em>{{ y.grade }}</em></td>
+                            <td class="data" {% if y.completion == 'FAILED' %} style="color: red;" {% elif y.completion == 'PASSED' %} style="color: green;" {% endif %}><em>{{ y.completion }}</em></td>
                         <tr>
                     {% endif %}
                 {% endfor %}
@@ -300,19 +300,19 @@
             <br><br>
             {% endfor %}
 
-            <table class="sortable">
+            <table class="sortable" style="width: 90vw;">
                 <thead>
                     <tr>
-                        <th>Total Units Completed</th>
-                        <th>Total Grade</th>
-                        <th>General Weighted Average</th>
+                        <th colspan="2" style="text-align: center;">Total Units Completed</th>
+                        <th style="text-align: center;">Total Grade</th>
+                        <th colspan="2" style="text-align: center;">General Weighted Average</th>
                     </tr>
                 </thead>
                 <tbody>
                     <tr>
-                        <td class="data">{{ student.completed_units }}</em></td>
-                        <td class="data"><em>{{ student.total_grade }}</em></td>
-                        <td class="data"><em>{{ student.gwa }}</em></td>
+                        <td class="data" colspan="2" style="text-align: center;">{{ student.completed_units }}</em></td>
+                        <td class="data" style="text-align: center;"><em>{{ student.total_grade }}</em></td>
+                        <td class="data" colspan="2" style="text-align: center;"><em>{{ student.gwa }}</em></td>
                     <tr>
                 </tbody>
             </table>

@@ -262,9 +262,9 @@
     <div style="margin-top: 2%; display: block; ">
         <div style="align-items: center; margin-bottom: 2%;">
             <label style="margin-left: 20%;">{{ term.title }}</label>
-            <button class="change_term" onClick="javascript:history.go(-1);" style="float: right; margin-right: 5%;">Back</button>
+            <button class="change_term" onclick="window.location.href='/reports'" style="float: right; margin-right: 5%;">Back</button>
         </div>
-        <div style="width: 86vw; margin-left: 250px; overflow-x: auto; max-height: 65vh; overflow-y: auto;">
+        <div style="width: 86vw; margin-left: 250px; overflow-x: auto; max-height: 70vh; overflow-y: auto;">
             <table class="sortable" style="border-collapse: collapse; width: 80vw;"> 
                 <thead >
                     <tr>
@@ -281,10 +281,10 @@
                         <th style="padding-right: 100px;">Contact Number</th>
                     </tr>
                 </thead>
-                <tbody >
+                <tbody>
                 {% for x in students %}
                     <tr class="userRow">
-                        <td class="data"><em>{{ x.student_number }}</em></td>
+                        <td {% if x.graduate == 'GRADUATED' %} style="background-color: rgb(77, 250, 143) !important; " {% elif x.id in repeats %} style="background-color: rgb(250, 80, 77) !important; " {% endif %}  class="data"><em>{{ x.student_number }}</em></td>
                         <td class="data"><em>{{ x.first_name }} {{ x.last_name }}</em></td>
                         <td class="data"><em>{{ x.program }}</em></td>
                         <td class="data"><em>{{ x.required_units }}</em></td>
