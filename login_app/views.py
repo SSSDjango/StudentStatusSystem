@@ -7,6 +7,7 @@ from django.contrib.auth.decorators import login_required
 from django.views.decorators.cache import cache_control
 from django.contrib.auth.models import User
 from django.http import JsonResponse
+from django.db.models import ProtectedError
 
 
 from login_app.forms import ExtendedUserChangeForm, ExtendedUserCreationForm, OfferingCreationForm, RegistrationCreationForm, StudentCreationForm, SubjectChoiceField, SubjectCreationForm, SubjectForm, TermCreationForm, UserProfileForm, TermForm, AdvisorDropdown, UserProfileChangeForm
@@ -21,6 +22,8 @@ def render_login(request):
     response = redirect('/accounts/login/')
     return response
 
+@login_required(login_url="/")
+@cache_control(no_cache=True, must_revalidate=True, no_store=True)
 def dashboard(request):
     context ={}
     user_id = request.user.id
@@ -29,6 +32,8 @@ def dashboard(request):
 
     return render(request, "dashboard.html", context)
 
+@login_required(login_url="/")
+@cache_control(no_cache=True, must_revalidate=True, no_store=True)
 def landing_page(request):
     user_id = request.user.id
     profile = UserProfile.objects.filter(user=user_id)
@@ -62,7 +67,8 @@ def perform_login(request):
         
 # https://www.youtube.com/watch?v=Tja4I_rgspI
 
-
+@login_required(login_url="/")
+@cache_control(no_cache=True, must_revalidate=True, no_store=True)
 def create_user(request):
     context={}
     user = None
@@ -100,20 +106,45 @@ def create_user(request):
 
     return render(request, 'create_user.html', context)
 
-
+@login_required(login_url="/")
+@cache_control(no_cache=True, must_revalidate=True, no_store=True)
 def delete_user(request, id):
     user_profile = get_object_or_404(UserProfile, id=id)
     obj = get_object_or_404(User, pk=user_profile.user_id)
-    if request.method == 'POST':
-        obj.delete()
-        return landing_page(request)
+    try:
+        if request.method == 'POST':
+            obj.delete()
+            return landing_page(request)
+    except ProtectedError as e:
+        messages.error(request, 'Cannot Delete, protected by referencing key!')
+        return redirect(request.META['HTTP_REFERER'])
     
+@login_required(login_url="/")
+@cache_control(no_cache=True, must_revalidate=True, no_store=True)
 def delete_subject(request, id):
     obj = get_object_or_404(Subject, pk=id)
-    if request.method == 'POST':
-        obj.delete()
-        return landing_page(request)
-    
+    try:
+        if request.method == 'POST':
+            obj.delete()
+            return redirect(request.META['HTTP_REFERER'])
+    except ProtectedError as e:
+        messages.error(request, 'Cannot Delete, protected by referencing key!')
+        return redirect(request.META['HTTP_REFERER'])
+
+@login_required(login_url="/")
+@cache_control(no_cache=True, must_revalidate=True, no_store=True)
+def delete_term(request, id):
+    obj = get_object_or_404(Term, pk=id)
+    try:
+        if request.method == 'POST':
+            obj.delete()
+            return academic_term_page(request)
+    except ProtectedError as e:
+        messages.error(request, 'Cannot Delete, protected by referencing key!')
+        return redirect(request.META['HTTP_REFERER'])
+
+@login_required(login_url="/")
+@cache_control(no_cache=True, must_revalidate=True, no_store=True)
 def edit_profile(request):
     user_id = request.user.id
     user = User.objects.get(id=user_id)
@@ -132,6 +163,8 @@ def edit_profile(request):
 
     return redirect(request.META['HTTP_REFERER'])
 
+@login_required(login_url="/")
+@cache_control(no_cache=True, must_revalidate=True, no_store=True)
 def update_password(request, user_id):
     userprofile = UserProfile.objects.get(pk=user_id)
     user = User.objects.get(pk=userprofile.user.id)
@@ -158,7 +191,9 @@ def update_password(request, user_id):
 
     # Render the edit profile form with the user's current information
     return render(request, 'update_password.html', context)
-    
+
+@login_required(login_url="/")
+@cache_control(no_cache=True, must_revalidate=True, no_store=True) 
 def update_profile(request, user_id):
     userprofile = UserProfile.objects.get(pk=user_id)
     user = User.objects.get(pk=userprofile.user.id)
@@ -186,6 +221,8 @@ def update_profile(request, user_id):
     # Render the edit profile form with the user's current information
     return render(request, 'update_profile.html', context)
 
+@login_required(login_url="/")
+@cache_control(no_cache=True, must_revalidate=True, no_store=True)
 def grade_csv(request):
     subject_pk = request.POST.get('subject')
     print(subject_pk)
@@ -248,6 +285,8 @@ def grade_csv(request):
         messages.error(request,"Unable to upload file. "+repr(e))
     return redirect(request.META['HTTP_REFERER'])
 
+@login_required(login_url="/")
+@cache_control(no_cache=True, must_revalidate=True, no_store=True)
 def download_template(request):
     subject_pk = request.POST.get('subject')
     subjectToFetch = Subject.objects.get(pk=subject_pk)
@@ -262,7 +301,9 @@ def download_template(request):
     for registration in registrationOfSubject:
         writer.writerow([registration.student.last_name,registration.student.student_number,registration.grade])
     return response  
-    
+
+@login_required(login_url="/")
+@cache_control(no_cache=True, must_revalidate=True, no_store=True)
 def create_student(request):
     context = {
         'student_form': StudentCreationForm(),  # Add the form to the context
@@ -301,19 +342,26 @@ def create_student(request):
     return render(request, 'create_student.html', context)
 
 @login_required(login_url="/")
+@cache_control(no_cache=True, must_revalidate=True, no_store=True)
 def delete_student(request, student_id):
-    if request.method == "POST":
-        student_to_delete = get_object_or_404(Student, pk=student_id)
-        deleted_student = Student.objects.get(id=0)
-        registrations = Registration.objects.filter(student=student_to_delete)
-        for registration in registrations:
-            registration.student = deleted_student
-            registration.save(update_fields=['student'])
-        student_to_delete.delete()
+    
+    try:
+        if request.method == "POST":
+            student_to_delete = get_object_or_404(Student, pk=student_id)
+            deleted_student = Student.objects.get(id=0)
+            registrations = Registration.objects.filter(student=student_to_delete)
+            for registration in registrations:
+                registration.student = deleted_student
+                registration.save(update_fields=['student'])
+            student_to_delete.delete()
+    except ProtectedError as e:
+        messages.error(request, 'Cannot Delete, protected by referencing key!')
+        return redirect(request.META['HTTP_REFERER'])
 
     return redirect(request.META['HTTP_REFERER'])
 
 @login_required(login_url="/")
+@cache_control(no_cache=True, must_revalidate=True, no_store=True)
 def edit_student(request, student_id):
     student = Student.objects.get(id=student_id)        
     context = {
@@ -346,6 +394,8 @@ def edit_student(request, student_id):
     
     return render(request, 'edit_student.html', context)
 
+@login_required(login_url="/")
+@cache_control(no_cache=True, must_revalidate=True, no_store=True)
 def manage_student(request):
     context={}
     user_id = request.user.id
@@ -419,6 +469,8 @@ def update_registration(request):
     
     return redirect(request.META['HTTP_REFERER'])
 
+@login_required(login_url="/")
+@cache_control(no_cache=True, must_revalidate=True, no_store=True)
 def manage_registration(request):
     context={}
     user_id = request.user.id
@@ -464,6 +516,8 @@ def manage_registration(request):
 
     return render(request, 'manage_registration.html', context)
 
+@login_required(login_url="/")
+@cache_control(no_cache=True, must_revalidate=True, no_store=True)
 def registration(request):
     context={}
     user_id = request.user.id
@@ -479,6 +533,8 @@ def registration(request):
 
     return render(request, 'registration.html', context)
 
+@login_required(login_url="/")
+@cache_control(no_cache=True, must_revalidate=True, no_store=True)
 def graduate_all(request, term_id):
     context = {}
     user_id = request.user.id
@@ -526,6 +582,8 @@ def graduate_all(request, term_id):
              
     return render(request, "manage_graduation.html", context)
 
+@login_required(login_url="/")
+@cache_control(no_cache=True, must_revalidate=True, no_store=True)
 def update_graduation_status(request):
     if request.method == 'POST':
         student_id = request.POST.get('student_id')
@@ -544,6 +602,8 @@ def update_graduation_status(request):
 
     return redirect(request.META['HTTP_REFERER'])
 
+@login_required(login_url="/")
+@cache_control(no_cache=True, must_revalidate=True, no_store=True)
 def manage_graduation(request, term_id):
     context = {}
     user_id = request.user.id
@@ -582,6 +642,8 @@ def manage_graduation(request, term_id):
 
     return render(request, "manage_graduation.html", context)
 
+@login_required(login_url="/")
+@cache_control(no_cache=True, must_revalidate=True, no_store=True)
 def graduation_select_term(request):
     context={}
     user_id = request.user.id
@@ -598,6 +660,8 @@ def graduation_select_term(request):
 
     return render(request, 'graduation_select_term.html', context)
 
+@login_required(login_url="/")
+@cache_control(no_cache=True, must_revalidate=True, no_store=True)
 def create_term(request):
     context={}
     user_id = request.user.id
@@ -616,6 +680,8 @@ def create_term(request):
     
     return render(request, 'add_term.html', context)
 
+@login_required(login_url="/")
+@cache_control(no_cache=True, must_revalidate=True, no_store=True)
 def create_offering(request):
     offering_form = OfferingCreationForm()  # Instantiate an instance of the form
     context = {
@@ -632,14 +698,20 @@ def create_offering(request):
     return render(request, 'create_offering.html', context)
 
 @login_required(login_url="/")
+@cache_control(no_cache=True, must_revalidate=True, no_store=True)
 def delete_offering(request, offering_id):
-    if request.method == "POST":
-        offering_to_delete = get_object_or_404(OfferedSubject, pk=offering_id)
-        offering_to_delete.delete()
+    try:
+        if request.method == "POST":
+            offering_to_delete = get_object_or_404(OfferedSubject, pk=offering_id)
+            offering_to_delete.delete()
+    except ProtectedError as e:
+        messages.error(request, 'Cannot Delete, protected by referencing key!')
+        return redirect(request.META['HTTP_REFERER'])
 
     return redirect(request.META['HTTP_REFERER'])
 
 @login_required(login_url="/")
+@cache_control(no_cache=True, must_revalidate=True, no_store=True)
 def edit_offering(request, offering_id):
     context={}
     offering_to_edit = OfferedSubject.objects.get(id=offering_id)
@@ -656,6 +728,8 @@ def edit_offering(request, offering_id):
 
     return render(request, 'edit_offering.html', context)
 
+@login_required(login_url="/")
+@cache_control(no_cache=True, must_revalidate=True, no_store=True)
 def course_offerings(request):
     context = {
         'offerings' : OfferedSubject.objects.all(),
@@ -670,7 +744,8 @@ def course_offerings(request):
 
     return render(request, 'courses_offered.html', context)
 
-
+@login_required(login_url="/")
+@cache_control(no_cache=True, must_revalidate=True, no_store=True)
 def edit_subject(request, subject_id):
     context ={}
     edit_subject = Subject.objects.get(id=subject_id)
@@ -690,6 +765,8 @@ def edit_subject(request, subject_id):
 
     return render(request, 'edit_subject.html', context)
 
+@login_required(login_url="/")
+@cache_control(no_cache=True, must_revalidate=True, no_store=True)
 def create_subject(request, term_id):
     context ={}
 
@@ -712,6 +789,8 @@ def create_subject(request, term_id):
     
     return render(request, 'create_subject.html', context)
 
+@login_required(login_url="/")
+@cache_control(no_cache=True, must_revalidate=True, no_store=True)
 def create_registration(request):
     if request.method == "POST":
         registration_form = RegistrationCreationForm(request.POST)
@@ -724,6 +803,8 @@ def create_registration(request):
 
     return landing_page(request)
 
+@login_required(login_url="/")
+@cache_control(no_cache=True, must_revalidate=True, no_store=True)
 def set_current_term(request, term_id):
 
     if request.method == "POST":
@@ -743,6 +824,8 @@ def set_current_term(request, term_id):
 
     return redirect(request.META['HTTP_REFERER'])
 
+@login_required(login_url="/")
+@cache_control(no_cache=True, must_revalidate=True, no_store=True)
 def view_term(request, term_id):
     context ={}
     user_id = request.user.id
@@ -1041,6 +1124,7 @@ def advisor_view(request):
     return render(request, "advisor.html", context)
 
 @login_required(login_url="/")
+@cache_control(no_cache=True, must_revalidate=True, no_store=True)
 def report_select(request):
     context = {}
     user_id = request.user.id
@@ -1057,6 +1141,8 @@ def report_select(request):
 
     return render(request, "reports.html", context)
 
+@login_required(login_url="/")
+@cache_control(no_cache=True, must_revalidate=True, no_store=True)
 def render_report(request, term_id):
     context = {}
 
@@ -1205,6 +1291,8 @@ def update_advisor(request, student_id):
     student.save(update_fields=['advisor'])
     return redirect(request.META['HTTP_REFERER'])
 
+@login_required(login_url="/")
+@cache_control(no_cache=True, must_revalidate=True, no_store=True)
 def adviser_assignments(request):
     response = redirect('/advisor_assignments')
     return response
@@ -1274,6 +1362,8 @@ def staff_grades(request):
 
     return render(request, "staff_grades.html", context)
 
+@login_required(login_url="/")
+@cache_control(no_cache=True, must_revalidate=True, no_store=True)
 def view_course(request, course_id):
     context = {}
     user_id = request.user.id
@@ -1284,6 +1374,8 @@ def view_course(request, course_id):
 
     return render(request, 'view_course.html', context)
 
+@login_required(login_url="/")
+@cache_control(no_cache=True, must_revalidate=True, no_store=True)
 def view_student(request, student_id):
     context={}
     relevant_term_ids = set()
@@ -1303,6 +1395,8 @@ def view_student(request, student_id):
 
     return render(request, 'view_student.html', context)
 
+@login_required(login_url="/")
+@cache_control(no_cache=True, must_revalidate=True, no_store=True)
 def curriculum_guide(request):
     context = {}
     user_id = request.user.id

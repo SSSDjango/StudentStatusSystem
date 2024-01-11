@@ -8,17 +8,14 @@ urlpatterns = [
     path("perform_logout", views.perform_logout, name="perform_logout"),
 
     path("delete_user/<int:id>/", views.delete_user, name="delete_user"),
-    
+    path("delete_term/<int:id>/", views.delete_term, name="delete_term"),
     path("delete_subject/<int:id>/", views.delete_subject, name="delete_subject"),
-
-    
     path("create_term", views.create_term, name="create_term"),
-    
-    
     path("create_registration", views.create_registration, name="create_registration"),
-
     path('edit_profile/', views.edit_profile, name='edit_profile'),
     path('update_grade/<int:registration_id>/', views.update_grade, name='update_grade'),
+
+    path('curriculum_guide', views.curriculum_guide, name="curriculum_guide"),
 
     # for general access
     path("dashboard/", views.landing_page, name="dashboard"),
