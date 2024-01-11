@@ -231,7 +231,7 @@
         <table>
             <thead>
                 <tr>
-                    <th style="padding-left: 100px; font-size: large;"><em>Course</em></th>
+                    <th style="padding-left: 100px; font-size: large;"><em>Course Name</em></th>
                     <th style="font-size: large;"><em>Course Title</em></th>
                     <th style="font-size: large;"><em>Lecture</em></th>
                     <th style="font-size: large;"><em>Laboratory</em></th>
@@ -259,6 +259,12 @@
             </tbody>
         </table>        
     </div>  
+
+    {% if messages %}
+        {% for message in messages %}
+        <script> alert('{{ message }}'); </script>
+        {% endfor %}
+    {% endif %}
 
     <div class="footer">
         2023

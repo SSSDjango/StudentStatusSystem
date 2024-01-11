@@ -180,21 +180,24 @@
     <br>
 
     <form id="filter" method="POST" action="{% url 'advisor_assignments' %}"> {% csrf_token %}
-    <div style="display: flex; align-items: center; margin-top: 2%; margin-left: 47%;">
-        <select id="program" name='program' class="enroll-dropdown" style="margin-right: 8px;">
-            {% if program_filter == 'None' %}
-                <option selected>None</option>
-            {% else %}
-                <option>None</option>
-            {% endif %}
-            {% for program in programs %}
-                {% if program_filter == program %}
-                <option value="{{ program }}" selected>{{ program }}</option>
+    <div style="display: flex; align-items: center; margin-top: 2%; margin-left: 15%;">
+        <div style="display: flex; flex-direction: row; align-items: center; margin-left: 35%;">
+            <div style="width: 210px; font-size: 16px; color: gray;">Undergraduate Program: </div>
+            <select id="program" name='program' class="enroll-dropdown" style="margin-right: 8px;">
+                {% if program_filter == 'None' %}
+                    <option selected>None</option>
                 {% else %}
-                <option value="{{ program }}">{{ program }}</option>
+                    <option>None</option>
                 {% endif %}
-            {% endfor %}
-        </select>
+                {% for program in programs %}
+                    {% if program_filter == program %}
+                    <option value="{{ program }}" selected>{{ program }}</option>
+                    {% else %}
+                    <option value="{{ program }}">{{ program }}</option>
+                    {% endif %}
+                {% endfor %}
+            </select>
+        </div>
         <button type="submit" hidden></button>
         <input style="width: 300px;" value='{{ student_number_filter }}' id="student_number" name='student_number' type="text" class="search-input" placeholder="Search by student_number...">
         <button style="width: 45px; margin-left: -50px; border-radius: 46%; background-color: transparent; color: gray;" class="register" type="submit">></button>
@@ -203,15 +206,15 @@
     </div>
     </form>
 
-    <div class="students" style="max-height: 70vh; overflow-y: auto;">
+    <div class="students" style="max-height: 65vh; overflow-y: auto;">
         <table>
             <thead >
                 <tr style="height: 60px;">
                     <th style="font-size: large; text-align: left; padding-left: 15px;"><em> </em></th>
                     <th style="font-size: large; text-align: left; padding-left: 15px; width: 200px;"><em>Student Name</em></th>
                     <th style="font-size: large; text-align: left; padding-left: 15px;"><em>Student Number</em></th>
-                    <th style="font-size: large; text-align: left; padding-left: 15px;"><em>Email Address</em></th>
                     <th style="font-size: large; text-align: left; padding-left: 15px;"><em>Undergraduate Program</em></th>
+                    <th style="font-size: large; text-align: left; padding-left: 15px;"><em>Thesis Adviser</em></th>
                 </tr>
             </thead>
             <tbody>

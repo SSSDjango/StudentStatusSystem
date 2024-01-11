@@ -219,8 +219,8 @@
         <form id="edit_profile" method="POST"  action="{% url 'edit_profile' %}">
             {% csrf_token %}
             <div style="width: 90vw; padding-left: 15px; height: 80vh;">
-                <i class="w3-jumbo material-icons" style="margin-left: 50px; float: left; margin-top: 3%; margin-right: 100px; color: gray; border: 2px solid gray; border-radius: 100%; transform: scale(2.5);">person</i>
-                <table style="padding-top: 30px; width: 850px;">
+                <i class="w3-jumbo material-icons" style="margin-left: 50px; float: left; margin-top: 2%; margin-right: 100px; color: gray; border: 2px solid gray; border-radius: 100%; transform: scale(2.5);">person</i>
+                <table style="padding-top: 30px; width: 55vw; border-collapse: collapse;">
                     <tr>
                         <td style="width: 8vw;"><label class="table-label" for="username">Username:</label></td>
                         <td style="width: 60%;"><input type="text" id="username" name="username" value="{{ x.user }}" required readonly></td>
@@ -231,7 +231,7 @@
                         <td style="width: 60%;"><input type="text" id="staff_id" name="staff_id" value="{{ x.staff_id }}" required readonly></td>
                     </tr>
                 </table>
-                <table style="width: 70vw; padding-top: 2%; margin-left: 30px;">
+                <table style="width: 68vw; margin-top: 50px; margin-left: 30px;">
                     <tr>
                         <td class="labels"><label class="table-label" for="first_name">First Name:</label></td>
                         <td class="inputs"><input type="text" id="first_name" name="first_name" value="{{ x.first_name }}" required readonly></td>
