@@ -346,9 +346,9 @@ def create_student(request):
 
                 # required_units based on program
                 program_units_dict = {
-                    'BS COMPUTER SCIENCE': 158,
-                    'BS BIOCHEMISTRY': 158,
-                    'BS APPLIED PHYSICS': 158,
+                    'BS COMPUTER SCIENCE': 155,
+                    'BS BIOCHEMISTRY': 155,
+                    'BS APPLIED PHYSICS': 155,
                 }
                 
                 student.required_units = program_units_dict[student.program]
@@ -597,7 +597,12 @@ def graduate_all(request, term_id):
     if request.method == 'POST':
         students = context['students']
         for student in students:
-            if student.completed_units >= student.required_units:
+            registrations = Registration.objects.filter(student=student)
+            effective_units = student.completed_units
+            for registration in registrations:
+                if registration.grade > 3:
+                    effective_units -= registration.subject.subject_offered.units
+            if effective_units >= student.required_units:
                 student.graduate = 'GRADUATED'
                 student.save(update_fields=['graduate'])
             
