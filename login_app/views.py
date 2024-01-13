@@ -9,10 +9,11 @@ from django.contrib.auth.models import User
 from django.http import JsonResponse
 from django.db.models import ProtectedError, Count
 from django.core.exceptions import ObjectDoesNotExist, MultipleObjectsReturned
-
+from django.contrib.auth.forms import UserCreationForm, UserChangeForm
+from django.core.exceptions import ValidationError
 from collections import Counter
 
-from login_app.forms import ExtendedUserChangeForm, ExtendedUserCreationForm, OfferingCreationForm, RegistrationCreationForm, StudentCreationForm, SubjectChoiceField, SubjectCreationForm, SubjectForm, TermCreationForm, UserProfileForm, TermForm, AdvisorDropdown, UserProfileChangeForm
+from login_app.forms import ExtendedUserChangeForm, ExtendedUserCreationForm, OfferingCreationForm, RegistrationCreationForm, StudentCreationForm, SubjectChoiceField, SubjectCreationForm, SubjectForm, TermCreationForm, UserProfileForm, TermForm, AdvisorDropdown, UserProfileChangeForm, PasswordForm
 from login_app.models import OfferedSubject, Registration, Student, Subject, Term, UserProfile
 
 from django.contrib import messages
@@ -172,13 +173,20 @@ def update_password(request, user_id):
     user = User.objects.get(pk=userprofile.user.id)
 
     if request.method == 'POST':
-        form = ExtendedUserCreationForm(request.POST, instance=user)
+        form = PasswordForm(request.POST, instance=user)
         profile_form = UserProfileForm(request.POST, instance=userprofile)
         if form.is_valid() and profile_form.is_valid():
-            form.save()
-            profile_form.save()
+            user = form.save(commit=True)
+            password = form.cleaned_data['password1']
+            confirm_password = form.cleaned_data['password2']
 
-            return landing_page(request)
+            if password != confirm_password:
+                print('passwords dont match\n' + password + '\n' + confirm_password)
+            else:
+                user.set_password(password)
+                user.save()
+                profile_form.save()
+                return landing_page(request)
         else:
             print(form.errors.as_data())
     
@@ -187,7 +195,7 @@ def update_password(request, user_id):
 
     context ={}
     context['user_profile'] = userprofile
-    context['form'] = ExtendedUserCreationForm(instance=user)
+    context['form'] = PasswordForm(instance=user)
     context['profile_form'] = UserProfileForm(instance=userprofile)
     context['x'] = userprofile
 

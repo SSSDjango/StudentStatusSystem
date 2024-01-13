@@ -1,6 +1,6 @@
 from django import forms
 from django.contrib.auth.forms import User
-from django.contrib.auth.forms import UserCreationForm, UserChangeForm
+from django.contrib.auth.forms import UserCreationForm, UserChangeForm, PasswordChangeForm
 from .models import OfferedSubject, Registration, Student, Subject, Term, UserProfile
 from .validators import validate_email
 
@@ -9,8 +9,6 @@ class DateInput(forms.DateInput):
 
 class ExtendedUserCreationForm(UserCreationForm):
     email = forms.EmailField(required=True, validators = [validate_email])
-    #first_name = forms.CharField(max_length=50)
-    #last_name = forms.CharField(max_length=50)
 
     class Meta:
         model = User
@@ -19,12 +17,11 @@ class ExtendedUserCreationForm(UserCreationForm):
     def save(self, commit=True):
         user = super().save(commit=False)
         user.email = self.cleaned_data['email']
-        #user.first_name = self.cleaned_data['first_name']
-        #user.last_name = self.cleaned_data['last_name']
 
         if commit:
             user.save()
         return user
+    
 
 class ExtendedUserChangeForm(UserChangeForm):
     class Meta:
@@ -34,6 +31,10 @@ class ExtendedUserChangeForm(UserChangeForm):
     def __init__(self, *args, **kwargs):
         super(ExtendedUserChangeForm, self).__init__(*args, **kwargs)
         del self.fields['password']
+
+class PasswordForm(ExtendedUserChangeForm):
+    password1=forms.CharField(widget=forms.PasswordInput())
+    password2=forms.CharField(widget=forms.PasswordInput())
 
 class UserProfileForm(forms.ModelForm):
     class Meta:
