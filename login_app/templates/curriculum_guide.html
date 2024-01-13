@@ -215,16 +215,16 @@
 
     <form id="filter" method="POST" action="{% url 'curriculum_guide' %}"> {% csrf_token %}
     <div style="display: flex; align-items: center; margin-top: 2%; margin-left: 18%;">
-        <label style="width: 25%;">
+        <label style="width: 20%;">
             {% if program_filter == 'None' %} <div style="width: 350px;">Select Undergraduate Program and Academic Year</div>
             {% elif program_filter == 'BSCS' %} BS Computer Science
             {% elif program_filter == 'BSAP' %} BS Applied Physics
             {% elif program_filter == 'BSBC' %} BS Biochemistry 
             {% endif %}
         </label>
-        <div style="display: flex; flex-direction: row; align-items: center; margin-left: 28%;">
+        <div style="display: flex; flex-direction: row; align-items: center; margin-left: 35%;">
             <div style="width: 150px; font-size: 16px; color: gray;">Undergraduate Program: </div>
-            <select id="program" name='program' class="enroll-dropdown" style="margin-right: 8px; margin-left: -10px; width: 100px;">
+            <select id="program" name='program' class="enroll-dropdown" style="margin-right: 8px; margin-left: -5px; width: 100px;">
                 {% if program_filter == 'None' %}
                     <option selected>None</option>
                 {% else %}
@@ -242,7 +242,7 @@
         
         <div style="display: flex; flex-direction: row; align-items: center; margin-left: 20px;">
             <div style="width: 150px; font-size: 16px; color: gray;">Academic Program: </div>
-            <select id="year" name='year' class="enroll-dropdown" style="margin-right: 8px; margin-left: -60px; width: 150px;">
+            <select id="year" name='year' class="enroll-dropdown" style="margin-right: 8px; margin-left: -50px; width: 150px;">
                 {% if year_filter == 'None' %}
                     <option selected>None</option>
                 {% else %}
@@ -258,7 +258,7 @@
             </select>
         </div>
         
-        <button style="width: 80px; margin-left: 0%;" type="button" onclick="window.location.href='/manage_registration'">Back</a></button>
+        <button style="width: 100px; margin-left: 2%;" type="button" onclick="window.location.href='/manage_registration'">Back</a></button>
         <button type="submit" hidden></button>
     </div>
     </form>
