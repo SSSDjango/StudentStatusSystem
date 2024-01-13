@@ -1232,12 +1232,12 @@ def enrollment(request):
 
     # all subjects of current term 
     if 'name' not in request.POST:
-        context['subjects'] = Subject.objects.filter(term=currentTerm.id, class_code__contains=class_code_filter)
+        context['subjects'] = Subject.objects.filter(term=currentTerm.id, subject_offered__class_code__contains=class_code_filter)
         context['search'] = ''
     else:
         search = request.POST.get('name')
         subject_offerings = OfferedSubject.objects.filter(subject_name__contains=search)
-        context['subjects'] = Subject.objects.filter(term=currentTerm.id, subject_offered__in=subject_offerings, class_code__contains=class_code_filter)
+        context['subjects'] = Subject.objects.filter(term=currentTerm.id, subject_offered__in=subject_offerings, subject_offered__class_code__contains=class_code_filter)
         context['search'] = search
 
     return render(request, "enrollment.html", context)

@@ -62,7 +62,7 @@ class UserProfile(models.Model):
     department = models.CharField(max_length=200)
     birthday = models.DateField(default=timezone.now)
     contact_number = models.CharField(max_length=15)
-    staff_id = models.CharField(max_length=15)
+    staff_id = models.CharField(max_length=9)
 
 
 class Student(models.Model):
@@ -105,6 +105,7 @@ class OfferedSubject(models.Model):
     subject_title = models.CharField(max_length=200)
     department = models.CharField(max_length=200)
     units = models.IntegerField(default=3) 
+    class_code = models.CharField(max_length=25)
     # non graded classes (PE) will have 0 units
 
     lecture = models.BooleanField(default=True)
@@ -120,8 +121,6 @@ class Subject(models.Model):
 
     slots = models.IntegerField(default=25)
     enrolled = models.IntegerField(default=0)
-
-    class_code = models.CharField(max_length=25)
 
 # Enrollment of a student to a subject
 class Registration(models.Model):

@@ -86,7 +86,7 @@ class TermCreationForm(forms.ModelForm):
 class OfferingCreationForm(forms.ModelForm):
     class Meta:
         model = OfferedSubject
-        fields = ('subject_name', 'subject_title', 'units', 'department', 'lecture', 'lab')
+        fields = ('subject_name', 'subject_title', 'units', 'department', 'class_code', 'lecture', 'lab')
 
 class OfferingChoiceField(forms.ModelChoiceField):
     def label_from_instance(self, obj):
@@ -102,7 +102,7 @@ class SubjectCreationForm(forms.ModelForm):
     professor = UserChoiceField(queryset=UserProfile.objects.filter(role__in = ('PROGRAM ADVISOR', 'THESIS ADVISOR', 'FACULTY'))) 
     class Meta: 
         model = Subject
-        fields = ('term', 'subject_offered', 'professor','section', 'slots', 'class_code')
+        fields = ('term', 'subject_offered', 'professor','section', 'slots')
 
 class SubjectChoiceField(forms.ModelChoiceField):
     def label_from_instance(self, obj):
